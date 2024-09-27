@@ -11,11 +11,14 @@
 		1030407A2CA681C8009C5A38 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103040792CA681C8009C5A38 /* SceneDelegate.swift */; };
 		1030407C2CA681C8009C5A38 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1030407B2CA681C8009C5A38 /* SplashVC.swift */; };
 		103040812CA681CA009C5A38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 103040802CA681CA009C5A38 /* Assets.xcassets */; };
-		103040842CA681CA009C5A38 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 103040832CA681CA009C5A38 /* Base */; };
 		1030408C2CA682AC009C5A38 /* SelectAssistentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1030408B2CA682AC009C5A38 /* SelectAssistentVC.swift */; };
 		1030408E2CA70F05009C5A38 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1030408D2CA70F05009C5A38 /* API.swift */; };
 		103040902CA70F4B009C5A38 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1030408F2CA70F4B009C5A38 /* SwiftyJSON.swift */; };
 		103040952CA71112009C5A38 /* SplashVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103040942CA71112009C5A38 /* SplashVM.swift */; };
+		103040982CA71808009C5A38 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103040972CA71808009C5A38 /* Colors.swift */; };
+		1030409C2CA7187B009C5A38 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1030409B2CA7187B009C5A38 /* UIColor.swift */; };
+		1030409E2CA71BCF009C5A38 /* CreatePlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1030409D2CA71BCF009C5A38 /* CreatePlayerVC.swift */; };
+		103040A02CA72E30009C5A38 /* GeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1030409F2CA72E30009C5A38 /* GeneralViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,12 +27,15 @@
 		103040792CA681C8009C5A38 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		1030407B2CA681C8009C5A38 /* SplashVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		103040802CA681CA009C5A38 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		103040832CA681CA009C5A38 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		103040852CA681CA009C5A38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1030408B2CA682AC009C5A38 /* SelectAssistentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAssistentVC.swift; sourceTree = "<group>"; };
 		1030408D2CA70F05009C5A38 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		1030408F2CA70F4B009C5A38 /* SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		103040942CA71112009C5A38 /* SplashVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVM.swift; sourceTree = "<group>"; };
+		103040972CA71808009C5A38 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		1030409B2CA7187B009C5A38 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		1030409D2CA71BCF009C5A38 /* CreatePlayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePlayerVC.swift; sourceTree = "<group>"; };
+		1030409F2CA72E30009C5A38 /* GeneralViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,14 +68,17 @@
 		103040762CA681C8009C5A38 /* volkov */ = {
 			isa = PBXGroup;
 			children = (
-				103040772CA681C8009C5A38 /* AppDelegate.swift */,
-				103040792CA681C8009C5A38 /* SceneDelegate.swift */,
+				1030409F2CA72E30009C5A38 /* GeneralViewController.swift */,
 				103040962CA711A8009C5A38 /* Splash */,
 				1030408B2CA682AC009C5A38 /* SelectAssistentVC.swift */,
+				1030409D2CA71BCF009C5A38 /* CreatePlayerVC.swift */,
+				1030409A2CA71866009C5A38 /* Extentions */,
+				103040992CA71830009C5A38 /* Helpers */,
 				103040912CA70F51009C5A38 /* Network */,
 				103040802CA681CA009C5A38 /* Assets.xcassets */,
-				103040822CA681CA009C5A38 /* LaunchScreen.storyboard */,
 				103040852CA681CA009C5A38 /* Info.plist */,
+				103040772CA681C8009C5A38 /* AppDelegate.swift */,
+				103040792CA681C8009C5A38 /* SceneDelegate.swift */,
 			);
 			path = volkov;
 			sourceTree = "<group>";
@@ -78,7 +87,6 @@
 			isa = PBXGroup;
 			children = (
 				1030408D2CA70F05009C5A38 /* API.swift */,
-				1030408F2CA70F4B009C5A38 /* SwiftyJSON.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -90,6 +98,23 @@
 				103040942CA71112009C5A38 /* SplashVM.swift */,
 			);
 			path = Splash;
+			sourceTree = "<group>";
+		};
+		103040992CA71830009C5A38 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				103040972CA71808009C5A38 /* Colors.swift */,
+				1030408F2CA70F4B009C5A38 /* SwiftyJSON.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		1030409A2CA71866009C5A38 /* Extentions */ = {
+			isa = PBXGroup;
+			children = (
+				1030409B2CA7187B009C5A38 /* UIColor.swift */,
+			);
+			path = Extentions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,7 +176,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				103040812CA681CA009C5A38 /* Assets.xcassets in Resources */,
-				103040842CA681CA009C5A38 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,27 +187,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				103040952CA71112009C5A38 /* SplashVM.swift in Sources */,
+				103040982CA71808009C5A38 /* Colors.swift in Sources */,
 				1030407C2CA681C8009C5A38 /* SplashVC.swift in Sources */,
 				1030408C2CA682AC009C5A38 /* SelectAssistentVC.swift in Sources */,
+				1030409C2CA7187B009C5A38 /* UIColor.swift in Sources */,
+				1030409E2CA71BCF009C5A38 /* CreatePlayerVC.swift in Sources */,
 				103040782CA681C8009C5A38 /* AppDelegate.swift in Sources */,
 				103040902CA70F4B009C5A38 /* SwiftyJSON.swift in Sources */,
+				103040A02CA72E30009C5A38 /* GeneralViewController.swift in Sources */,
 				1030407A2CA681C8009C5A38 /* SceneDelegate.swift in Sources */,
 				1030408E2CA70F05009C5A38 /* API.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		103040822CA681CA009C5A38 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				103040832CA681CA009C5A38 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		103040862CA681CA009C5A38 /* Debug */ = {
