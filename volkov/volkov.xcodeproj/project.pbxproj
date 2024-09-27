@@ -13,6 +13,9 @@
 		103040812CA681CA009C5A38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 103040802CA681CA009C5A38 /* Assets.xcassets */; };
 		103040842CA681CA009C5A38 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 103040832CA681CA009C5A38 /* Base */; };
 		1030408C2CA682AC009C5A38 /* SelectAssistentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1030408B2CA682AC009C5A38 /* SelectAssistentVC.swift */; };
+		1030408E2CA70F05009C5A38 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1030408D2CA70F05009C5A38 /* API.swift */; };
+		103040902CA70F4B009C5A38 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1030408F2CA70F4B009C5A38 /* SwiftyJSON.swift */; };
+		103040952CA71112009C5A38 /* SplashVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103040942CA71112009C5A38 /* SplashVM.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +27,9 @@
 		103040832CA681CA009C5A38 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		103040852CA681CA009C5A38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1030408B2CA682AC009C5A38 /* SelectAssistentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectAssistentVC.swift; sourceTree = "<group>"; };
+		1030408D2CA70F05009C5A38 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		1030408F2CA70F4B009C5A38 /* SwiftyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		103040942CA71112009C5A38 /* SplashVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,13 +64,32 @@
 			children = (
 				103040772CA681C8009C5A38 /* AppDelegate.swift */,
 				103040792CA681C8009C5A38 /* SceneDelegate.swift */,
-				1030407B2CA681C8009C5A38 /* SplashVC.swift */,
+				103040962CA711A8009C5A38 /* Splash */,
 				1030408B2CA682AC009C5A38 /* SelectAssistentVC.swift */,
+				103040912CA70F51009C5A38 /* Network */,
 				103040802CA681CA009C5A38 /* Assets.xcassets */,
 				103040822CA681CA009C5A38 /* LaunchScreen.storyboard */,
 				103040852CA681CA009C5A38 /* Info.plist */,
 			);
 			path = volkov;
+			sourceTree = "<group>";
+		};
+		103040912CA70F51009C5A38 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				1030408D2CA70F05009C5A38 /* API.swift */,
+				1030408F2CA70F4B009C5A38 /* SwiftyJSON.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		103040962CA711A8009C5A38 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				1030407B2CA681C8009C5A38 /* SplashVC.swift */,
+				103040942CA71112009C5A38 /* SplashVM.swift */,
+			);
+			path = Splash;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,10 +162,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				103040952CA71112009C5A38 /* SplashVM.swift in Sources */,
 				1030407C2CA681C8009C5A38 /* SplashVC.swift in Sources */,
 				1030408C2CA682AC009C5A38 /* SelectAssistentVC.swift in Sources */,
 				103040782CA681C8009C5A38 /* AppDelegate.swift in Sources */,
+				103040902CA70F4B009C5A38 /* SwiftyJSON.swift in Sources */,
 				1030407A2CA681C8009C5A38 /* SceneDelegate.swift in Sources */,
+				1030408E2CA70F05009C5A38 /* API.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

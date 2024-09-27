@@ -17,7 +17,6 @@ class SelectAssistentVC: UIViewController {
         for i in 0..<listAssistent.count {
             let button = UIButton()
             button.setTitle(listAssistent[i], for: .normal)
-            button.
             //
             button.translatesAutoresizingMaskIntoConstraints = false
             button.heightAnchor.constraint(equalToConstant: 100).isActive = true

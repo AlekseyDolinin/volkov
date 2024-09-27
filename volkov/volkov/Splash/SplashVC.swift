@@ -2,6 +2,8 @@ import UIKit
 
 class SplashVC: UIViewController {
     
+    private var vm: SplashVM?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -12,15 +14,27 @@ class SplashVC: UIViewController {
             self.showSelectAssistentVC()
         }
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        vm = SplashVM()
+        vm?.delegate = self
+        vm?.getData()
+    }
 
     private func showSelectAssistentVC() {
         print("showSelectAssistentVC")
         DispatchQueue.main.async {
             let vc = SelectAssistentVC()
-            print(self.navigationController)
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
-
 }
 
+
+extension SplashVC: SplashVMDelegate {
+    
+    func updateContent() {
+        print("updateContent")
+    }
+}
