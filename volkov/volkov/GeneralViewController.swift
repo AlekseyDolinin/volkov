@@ -7,17 +7,6 @@ class GeneralViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         view.backgroundColor = .white
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
-//        setNavigationBar()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        //
-        setNavigationBar()
-    }
-        
-    private func setNavigationBar() {
         createBackButton()
     }
     
@@ -31,16 +20,8 @@ class GeneralViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)
     }
     
-    @objc private func back_() {
+    @objc 
+    private func back_() {
         navigationController?.popViewController(animated: true)
-    }
-}
-
-
-extension GeneralViewController: UIGestureRecognizerDelegate {
-    
-    // не обрабатывать свайп назад если нахожусь на первом экране или в на экране боя
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        return true
     }
 }

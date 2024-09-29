@@ -9,21 +9,15 @@ class CreatePlayerVC: GeneralViewController {
     private let inputeNamePlayer = UITextField()
     private let startButton = UIButton()
     
-    var nameAssistent = ""
-    var namePlayer = ""
-    
-    init(nameAssistent: String) {
-        super.init(nibName: nil, bundle: nil)
-        self.nameAssistent = nameAssistent
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        createSubviews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        inputeNamePlayer.text = ""
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -36,29 +30,43 @@ class CreatePlayerVC: GeneralViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        createSubviews()
-        inputeNamePlayer.becomeFirstResponder()
-
+        DispatchQueue.main.async {
+            self.inputeNamePlayer.becomeFirstResponder()
+        }
     }
     
     @objc private func editingChangedInput() {
+        LocalStorage.shared.namePlayer = inputeNamePlayer.text ?? ""
         startButton.alpha = inputeNamePlayer.text!.isEmpty ? 0.2 : 1.0
+        startButton.isEnabled = !(inputeNamePlayer.text!.isEmpty)
     }
     
     @objc private func keyboardWillShow(notification: Notification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            self.startButton.transform = CGAffineTransform(translationX: 0, y: -(keyboardSize.height))
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 0.2) {
+                    self.startButton.transform = CGAffineTransform(translationX: 0, y: -(keyboardSize.height))
+                }
+            }
         }
     }
 
     @objc private func keyboardWillHide(notification: Notification) {
-        self.startButton.transform = .identity
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.3) {
+                self.startButton.transform = .identity
+            }
+        }
     }
     
     private func startAction() {
         print("startAction")
-        print("nameAssistent: \(nameAssistent)")
-        print("namePlayer: \(namePlayer)")
+        print("nameAssistent: \(LocalStorage.shared.nameAssistent)")
+        print("namePlayer: \(LocalStorage.shared.namePlayer)")
+        DispatchQueue.main.async {
+            let vc = SelectSceneVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }
 
@@ -100,7 +108,7 @@ extension CreatePlayerVC {
     private func createNameAssistent() {
         viewBack.addSubview(nameAssistentLabel)
         nameAssistentLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        nameAssistentLabel.text = nameAssistent
+        nameAssistentLabel.text = LocalStorage.shared.nameAssistent
         nameAssistentLabel.textAlignment = .center
         nameAssistentLabel.numberOfLines = 0
         nameAssistentLabel.textColor = darkBlue
@@ -153,6 +161,8 @@ extension CreatePlayerVC {
         startButton.setTitle("Начать", for: .normal)
         startButton.setTitleColor(.white, for: .normal)
         startButton.backgroundColor = darkBlue
+        startButton.alpha = 0.2
+        startButton.isEnabled = false
         let action = UIAction { [weak self] _ in
             self?.startAction()
         }
@@ -165,4 +175,3 @@ extension CreatePlayerVC {
         startButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
     }
 }
-

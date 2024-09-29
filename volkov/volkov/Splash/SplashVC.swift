@@ -8,7 +8,6 @@ class SplashVC: UIViewController {
     private let logoLabmedia = UIImageView()
     private let loader = UIActivityIndicatorView()
    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         createSubviews()
@@ -26,8 +25,10 @@ class SplashVC: UIViewController {
 
     private func showSelectAssistentVC() {
         DispatchQueue.main.async {
-            let vc = SelectAssistentVC()
-            self.navigationController?.pushViewController(vc, animated: true)
+            let nc = UINavigationController()
+            nc.addChild(SelectAssistentVC())
+            SceneDelegate.window?.rootViewController = nc
+            SceneDelegate.window?.makeKeyAndVisible()
         }
     }
 }

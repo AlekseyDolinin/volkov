@@ -8,18 +8,23 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
-    var window: UIWindow?
-
+    
+    static var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: windowScene)
-        let nc = UINavigationController()
-        nc.addChild(SplashVC())
-        window.rootViewController = nc
-        window.makeKeyAndVisible()
-        self.window = window
+        SceneDelegate.window = UIWindow(windowScene: windowScene)
+        
+//        let nc = UINavigationController()
+//        let appearance = UINavigationBarAppearance()
+//        appearance.backgroundColor = .white
+//        appearance.shadowColor = .clear
+//        nc.navigationBar.scrollEdgeAppearance = appearance
+//        nc.navigationBar.standardAppearance = appearance
+//        
+//        nc.addChild(SplashVC())
+        SceneDelegate.window?.rootViewController = SplashVC()
+        SceneDelegate.window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

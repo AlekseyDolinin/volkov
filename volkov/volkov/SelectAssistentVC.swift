@@ -6,40 +6,26 @@ class SelectAssistentVC: UIViewController {
     private let viewBack = UIView()
     private let titlePrimery = UILabel()
     private let stack = UIStackView()
-
-    let listAssistent = ["Ivanov Ivay", "Petrov Petr", "Kuznetsov Kuzya"]
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationController?.navigationBar.isHidden = true
+        super.viewDidLoad()        
         view.backgroundColor = .white
         createSubviews()
         createButtonsSelectAssistent()
     }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = true
-    }
-
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        navigationController?.navigationBar.isHidden = false
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-    }
     
     private func createButtonsSelectAssistent() {
-        for i in 0..<listAssistent.count {
+        for i in 0..<LocalStorage.shared.listAssistent.count {
             let button = UIButton()
             button.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .light)
             button.layer.cornerRadius = 16
-            button.setTitle(listAssistent[i], for: .normal)
+            button.setTitle(LocalStorage.shared.listAssistent[i], for: .normal)
             button.backgroundColor = darkBlue
             button.tag = i
-            let action = UIAction { [weak self] _ in
-                self?.selectAssistent(index: button.tag)
+            let actionSelect = UIAction { [weak self] _ in
+                self?.selectAssistent(btn: button)
             }
-            button.addAction(action, for: .touchUpInside)
+            button.addAction(actionSelect, for: .touchUpInside)
             //
             button.translatesAutoresizingMaskIntoConstraints = false
             button.heightAnchor.constraint(equalToConstant: 100).isActive = true
@@ -47,13 +33,27 @@ class SelectAssistentVC: UIViewController {
         }
     }
     
-    private func selectAssistent(index: Int) {
+    private func selectAssistent(btn: UIButton) {
+        LocalStorage.shared.nameAssistent = LocalStorage.shared.listAssistent[btn.tag]
         DispatchQueue.main.async {
-            let vc = CreatePlayerVC(nameAssistent: self.listAssistent[index])
-            self.navigationController?.pushViewController(vc, animated: true)
+            UIView.animate(withDuration: 0.1) {
+                btn.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            } completion: { _ in
+                btn.transform = .identity
+                let vc = CreatePlayerVC()
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
 }
+
+
+extension SelectAssistentVC: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return false
+    }
+}
+
 
 extension SelectAssistentVC {
     
