@@ -18,6 +18,7 @@ class CreatePlayerVC: GeneralViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         inputeNamePlayer.text = ""
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow),
                                                name: UIResponder.keyboardWillShowNotification,
@@ -33,6 +34,29 @@ class CreatePlayerVC: GeneralViewController {
         DispatchQueue.main.async {
             self.inputeNamePlayer.becomeFirstResponder()
         }
+    }
+    
+    override func back_() {
+        let title = "Хотите начать с начала?"
+        let message = "Все введенные данные и сохранённые метки будут удалены."
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let backAction = UIAlertAction(title: "Да, начать сначала", style: .default) { [weak self] _ in
+            self?.startOver()
+        }
+        let closeAlert = UIAlertAction(title: "Отмена", style: .destructive)
+        alert.addAction(closeAlert)
+        alert.addAction(backAction)
+        present(alert, animated: true)
+    }
+    
+    private func startOver() {
+        clearData()
+        navigationController?.popViewController(animated: true)
+    }
+    /// удаление данных
+    private func clearData() {
+        
+        
     }
     
     @objc private func editingChangedInput() {
@@ -64,6 +88,7 @@ class CreatePlayerVC: GeneralViewController {
         print("nameAssistent: \(LocalStorage.shared.nameAssistent)")
         print("namePlayer: \(LocalStorage.shared.namePlayer)")
         DispatchQueue.main.async {
+            self.view.endEditing(true)
             let vc = SelectSceneVC()
             self.navigationController?.pushViewController(vc, animated: true)
         }
@@ -173,5 +198,15 @@ extension CreatePlayerVC {
         startButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
         startButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
         startButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
+    }
+}
+
+
+extension CreatePlayerVC: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldReceive touch: UITouch) -> Bool {
+        return true
     }
 }

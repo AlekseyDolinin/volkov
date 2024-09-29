@@ -21,7 +21,7 @@ class GeneralViewController: UIViewController {
     }
     
     @objc 
-    private func back_() {
+    func back_() {
         navigationController?.popViewController(animated: true)
     }
 }

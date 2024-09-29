@@ -48,13 +48,6 @@ class SelectAssistentVC: UIViewController {
 }
 
 
-extension SelectAssistentVC: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        return false
-    }
-}
-
-
 extension SelectAssistentVC {
     
     private func createSubviews() {
@@ -115,3 +108,12 @@ extension SelectAssistentVC {
     }
 }
 
+
+//extension SelectAssistentVC: UIGestureRecognizerDelegate {
+//    
+//    func gestureRecognizer(
+//        _ gestureRecognizer: UIGestureRecognizer,
+//        shouldReceive touch: UITouch) -> Bool {
+//        return false
+//    }
+//}

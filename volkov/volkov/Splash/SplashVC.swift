@@ -25,7 +25,18 @@ class SplashVC: UIViewController {
 
     private func showSelectAssistentVC() {
         DispatchQueue.main.async {
+            let navigationBarAppearance = UINavigationBarAppearance()
+            navigationBarAppearance.configureWithOpaqueBackground()
+            navigationBarAppearance.titleTextAttributes = [
+                NSAttributedString.Key.foregroundColor : UIColor.white
+            ]
+            navigationBarAppearance.backgroundColor = UIColor.white
+            navigationBarAppearance.shadowColor = .clear
+            UINavigationBar.appearance().standardAppearance = navigationBarAppearance
+            UINavigationBar.appearance().compactAppearance = navigationBarAppearance
+            UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
             let nc = UINavigationController()
+
             nc.addChild(SelectAssistentVC())
             SceneDelegate.window?.rootViewController = nc
             SceneDelegate.window?.makeKeyAndVisible()

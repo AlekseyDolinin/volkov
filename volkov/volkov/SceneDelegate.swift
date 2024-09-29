@@ -14,15 +14,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         SceneDelegate.window = UIWindow(windowScene: windowScene)
-        
-//        let nc = UINavigationController()
-//        let appearance = UINavigationBarAppearance()
-//        appearance.backgroundColor = .white
-//        appearance.shadowColor = .clear
-//        nc.navigationBar.scrollEdgeAppearance = appearance
-//        nc.navigationBar.standardAppearance = appearance
-//        
-//        nc.addChild(SplashVC())
         SceneDelegate.window?.rootViewController = SplashVC()
         SceneDelegate.window?.makeKeyAndVisible()
     }

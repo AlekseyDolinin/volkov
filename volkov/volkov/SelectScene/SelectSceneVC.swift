@@ -47,7 +47,6 @@ extension SelectSceneVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(LocalStorage.shared.listScenes[indexPath.row])
         if indexPath.row == 0 {
             DispatchQueue.main.async {
                 let vc = SelectPartVC()
@@ -55,7 +54,7 @@ extension SelectSceneVC: UITableViewDelegate, UITableViewDataSource {
             }
         } else {
             DispatchQueue.main.async {
-                let vc = SelectMarkVC()
+                let vc = SelectMarkVC(typeSelectMark: .single)
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }

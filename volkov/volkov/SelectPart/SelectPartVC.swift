@@ -40,7 +40,7 @@ extension SelectPartVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         DispatchQueue.main.async {
-            let vc = SelectMarkVC()
+            let vc = SelectMarkVC(typeSelectMark: .multi)
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

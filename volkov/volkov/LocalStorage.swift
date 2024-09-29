@@ -36,12 +36,9 @@ class LocalStorage: NSObject {
     
     
     
-    var marks = [["name": "marks_1", "select": false],
-                 ["name": "marks_2", "select": false],
-                 ["name": "marks_3", "select": false],
-                 ["name": "marks_4", "select": false],
-                 ["name": "marks_5", "select": false]]
+    var marks = [["name": "mark_1", "select": false],
+                 ["name": "mark_2", "select": false],
+                 ["name": "mark_3", "select": false],
+                 ["name": "mark_4", "select": false],
+                 ["name": "mark_5", "select": false]]
 }
-
-
-

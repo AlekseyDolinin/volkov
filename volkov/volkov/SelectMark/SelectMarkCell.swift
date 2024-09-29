@@ -1,11 +1,17 @@
 import UIKit
 
+enum TypeSelectMark {
+    case single
+    case multi
+}
+
 final class SelectMarkCell: UITableViewCell {
     
     private let backView = UIView()
     private let name = UILabel()
     private let checkIcon = UIImageView()
     
+    var typeSelectMark: TypeSelectMark!
     var isSelect: Bool = false
     var nameMark: String! {
         didSet { setCell() }
@@ -33,6 +39,10 @@ final class SelectMarkCell: UITableViewCell {
             name.textColor = darkBlue
             checkIcon.isHidden = true
         }
+        //
+        let iconName = typeSelectMark == .multi ? "checkmark.square.fill" : "circlebadge.fill"
+        let configuration = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular)
+        checkIcon.image = UIImage(systemName: iconName, withConfiguration: configuration)
     }
 }
 
@@ -76,8 +86,6 @@ extension SelectMarkCell {
         backView.addSubview(checkIcon)
         checkIcon.tintColor = .white
         checkIcon.contentMode = .center
-        let configuration = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular)
-        checkIcon.image = UIImage(systemName: "checkmark.square.fill", withConfiguration: configuration)
         //
         checkIcon.translatesAutoresizingMaskIntoConstraints = false
         checkIcon.rightAnchor.constraint(equalTo: backView.rightAnchor, constant: -4).isActive = true

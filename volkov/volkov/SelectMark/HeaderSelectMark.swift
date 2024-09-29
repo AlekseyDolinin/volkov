@@ -4,6 +4,8 @@ class HeaderSelectMark: UIView {
     
     private let titlePrimery = UILabel()
     
+    var typeSelectMark: TypeSelectMark!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         createSubViews()
@@ -16,7 +18,14 @@ class HeaderSelectMark: UIView {
     }
     
     func setView() {
-
+        switch typeSelectMark {
+        case .multi:
+            titlePrimery.text = "Выберите несколько меток"
+        case .single:
+            titlePrimery.text = "Выберите одну метку"
+        default:
+            titlePrimery.text = "Выберите метку"
+        }
         layoutIfNeeded()
     }
 }
@@ -30,10 +39,10 @@ extension HeaderSelectMark {
     
     private func createTitle() {
         addSubview(titlePrimery)
-        titlePrimery.text = "Выберите несколько меток"
-        titlePrimery.text = "Выберите одну метку"
         titlePrimery.font = UIFont.systemFont(ofSize: 32, weight: .light)
         titlePrimery.textColor = darkBlue
+        titlePrimery.lineBreakMode = .byWordWrapping
+        titlePrimery.numberOfLines = 0
         titlePrimery.textAlignment = .center
         //
         titlePrimery.translatesAutoresizingMaskIntoConstraints = false
