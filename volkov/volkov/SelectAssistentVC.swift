@@ -14,11 +14,12 @@ class SelectAssistentVC: UIViewController {
         view.backgroundColor = .black
         createSubviews()
         parseAssistents()
+        checkDontCompletedSession()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        checkDontCompletedSession()
+//        checkDontCompletedSession()
     }
     
     private func checkDontCompletedSession() {

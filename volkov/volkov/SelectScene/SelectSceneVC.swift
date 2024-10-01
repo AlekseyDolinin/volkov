@@ -6,6 +6,7 @@ class SelectSceneVC: GeneralViewController {
     
     private var table = UITableView()
     private var header = HeaderSelectScene()
+    private let pickButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,6 +79,7 @@ extension SelectSceneVC {
     
     private func createSubviews() {
         createTable()
+        createPickButton()
     }
     
     private func createTable() {
@@ -97,5 +99,38 @@ extension SelectSceneVC {
         table.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         table.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+    
+    private func createPickButton() {
+        view.addSubview(pickButton)
+        pickButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        pickButton.layer.cornerRadius = 8
+        pickButton.setTitle("Подобрать", for: .normal)
+        pickButton.setTitleColor(.black, for: .normal)
+        pickButton.backgroundColor = gold
+        pickButton.alpha = 0.2
+        pickButton.isEnabled = false
+        let action = UIAction { [weak self] _ in
+            self?.pickAction()
+        }
+        pickButton.addAction(action, for: .touchUpInside)
+        //
+        pickButton.translatesAutoresizingMaskIntoConstraints = false
+        pickButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
+        pickButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
+        pickButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
+        pickButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
+    }
+    
+    
+    
+    private func pickAction() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateString = formatter.string(from: Date())
+        print("dateString finishSession: \(dateString)")
+        UserDefaults.standard.setValue(dateString, forKey: "finishSession")
+        //
+        vm.pickAction()
     }
 }

@@ -66,6 +66,13 @@ class CreatePlayerVC: GeneralViewController {
     @objc private func editingChangedInput() {
         LocalStorage.shared.namePlayer = inputeNamePlayer.text ?? ""
         UserDefaults.standard.setValue(inputeNamePlayer.text, forKey: "namePlayer")
+        //
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateString = formatter.string(from: Date())
+        print("dateString: \(dateString)")
+        UserDefaults.standard.setValue(dateString, forKey: "startSession")
+        //
         startButton.alpha = inputeNamePlayer.text!.isEmpty ? 0.2 : 1.0
         startButton.isEnabled = !(inputeNamePlayer.text!.isEmpty)
     }
@@ -147,7 +154,6 @@ extension CreatePlayerVC {
         //
         if let selectAssistent = LocalStorage.shared.selectAssistent {
             nameAssistentLabel.text = "\(selectAssistent.surname) \(selectAssistent.name) \(selectAssistent.middleName)"
-
         }
     }
     
