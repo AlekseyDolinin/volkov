@@ -1,8 +1,11 @@
 import UIKit
 
-class HeaderSelectPart: UIView {
+class HeaderSelectTag: UIView {
     
     private let titlePrimery = UILabel()
+    
+    var selectScene: Scene!
+    var selectCategory: Category!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -16,13 +19,21 @@ class HeaderSelectPart: UIView {
     }
     
     func setView() {
-
+//        switch typeSelectMark {
+//        case .multi:
+//            titlePrimery.text = "Выберите несколько меток"
+//        case .single:
+//            titlePrimery.text = "Выберите одну метку"
+//        default:
+//            titlePrimery.text = "Выберите метку"
+//        }
+        titlePrimery.text = "Выберите метку"
         layoutIfNeeded()
     }
 }
 
 
-extension HeaderSelectPart {
+extension HeaderSelectTag {
     
     private func createSubViews() {
         createTitle()
@@ -30,11 +41,10 @@ extension HeaderSelectPart {
     
     private func createTitle() {
         addSubview(titlePrimery)
-        titlePrimery.text = "В данной сцене несколько частей"
         titlePrimery.font = UIFont.systemFont(ofSize: 32, weight: .light)
-        titlePrimery.textColor = darkBlue
-        titlePrimery.numberOfLines = 0
+        titlePrimery.textColor = .white
         titlePrimery.lineBreakMode = .byWordWrapping
+        titlePrimery.numberOfLines = 0
         titlePrimery.textAlignment = .center
         //
         titlePrimery.translatesAutoresizingMaskIntoConstraints = false

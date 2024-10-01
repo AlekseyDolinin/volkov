@@ -10,14 +10,14 @@ class SplashVC: UIViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
+        vm = SplashVM()
+        vm?.delegate = self
         createSubviews()
-        view.backgroundColor = .white
+        view.backgroundColor = .black
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        vm = SplashVM()
-        vm?.delegate = self
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.vm?.getData()
         }
@@ -28,9 +28,9 @@ class SplashVC: UIViewController {
             let navigationBarAppearance = UINavigationBarAppearance()
             navigationBarAppearance.configureWithOpaqueBackground()
             navigationBarAppearance.titleTextAttributes = [
-                NSAttributedString.Key.foregroundColor : UIColor.white
+                NSAttributedString.Key.foregroundColor : UIColor.black
             ]
-            navigationBarAppearance.backgroundColor = UIColor.white
+            navigationBarAppearance.backgroundColor = UIColor.black
             navigationBarAppearance.shadowColor = .clear
             UINavigationBar.appearance().standardAppearance = navigationBarAppearance
             UINavigationBar.appearance().compactAppearance = navigationBarAppearance
@@ -42,10 +42,27 @@ class SplashVC: UIViewController {
             SceneDelegate.window?.makeKeyAndVisible()
         }
     }
+    
+    private func showAlertOfflineMode() {
+        let title = "Отсутствует соединение с интернет"
+        let message = "Будут использоваться ранее сохраненные данные"
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let notInternetAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+            self?.showSelectAssistentVC()
+        }
+        alert.addAction(notInternetAction)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
+    }
 }
 
 
 extension SplashVC: SplashVMDelegate {
+    
+    func offlineMode() {
+        showAlertOfflineMode()
+    }
     
     func updateContent() {
         showSelectAssistentVC()
@@ -63,7 +80,7 @@ extension SplashVC {
     
     private func createLogoTheater() {
         view.addSubview(logoTheater)
-        logoTheater.image = UIImage(named: "logo")
+        logoTheater.image = UIImage(named: "logoT")
         logoTheater.contentMode = .scaleAspectFit
         //
         logoTheater.translatesAutoresizingMaskIntoConstraints = false
@@ -75,7 +92,7 @@ extension SplashVC {
     
     private func createLogoLabmedia() {
         view.addSubview(logoLabmedia)
-        logoLabmedia.image = UIImage(named: "labmedia_logo")
+        logoLabmedia.image = UIImage(named: "logoBB")
         logoLabmedia.contentMode = .scaleAspectFit
         //
         logoLabmedia.translatesAutoresizingMaskIntoConstraints = false
@@ -87,7 +104,7 @@ extension SplashVC {
     private func createLoader() {
         view.addSubview(loader)
         loader.style = .medium
-        loader.color = darkBlue
+        loader.color = .white
         loader.startAnimating()
         //
         loader.translatesAutoresizingMaskIntoConstraints = false

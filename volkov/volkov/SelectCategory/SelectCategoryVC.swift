@@ -1,53 +1,56 @@
 import UIKit
 
-class SelectPartVC: GeneralViewController {
+class SelectCategoryVC: GeneralViewController {
 
     private var table = UITableView()
-    private var header = HeaderSelectPart()
+    private var header = HeaderSelectCategory()
+    
+    var selectScene: Scene!
+    
+    init(selectScene: Scene) {
+        super.init(nibName: nil, bundle: nil)
+        self.selectScene = selectScene
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         createSubviews()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        header.setView()
-    }
-    
-    private func showListFilteredPerformance() {
-        DispatchQueue.main.async {
-            let vc = FilteredPerformanceVC()
-            vc.modalPresentationStyle = .pageSheet
-            self.present(vc, animated: true)
-        }
+        header.layoutIfNeeded()
     }
 }
 
 
-extension SelectPartVC: UITableViewDelegate, UITableViewDataSource {
+extension SelectCategoryVC: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return selectScene.categories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SelectPartCell", for: indexPath) as! SelectPartCell
-        cell.nameScene = LocalStorage.shared.listScenes[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SelectCategoryCell.identifier, 
+                                                       for: indexPath) as? SelectCategoryCell else {
+            fatalError("Unable deque cell...")
+        }
+        cell.category = selectScene.categories[indexPath.row]
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         DispatchQueue.main.async {
-            let vc = SelectMarkVC(typeSelectMark: .multi)
+            let vc = SelectTagVC(selectScene: self.selectScene, 
+                                  selectCategory: self.selectScene.categories[indexPath.row])
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
 
 
-extension SelectPartVC {
+extension SelectCategoryVC {
     
     private func createSubviews() {
         createTable()
@@ -61,7 +64,7 @@ extension SelectPartVC {
         table.showsVerticalScrollIndicator = false
         table.delegate = self
         table.dataSource = self
-        table.register(SelectPartCell.self, forCellReuseIdentifier: "SelectPartCell")
+        table.register(SelectCategoryCell.self, forCellReuseIdentifier: SelectCategoryCell.identifier)
         table.tableHeaderView = header
         table.createClearFooter()
         //

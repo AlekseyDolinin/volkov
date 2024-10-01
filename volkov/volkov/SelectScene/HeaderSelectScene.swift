@@ -14,11 +14,6 @@ class HeaderSelectScene: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
-    func setView() {
-
-        layoutIfNeeded()
-    }
 }
 
 
@@ -32,7 +27,7 @@ extension HeaderSelectScene {
         addSubview(titlePrimery)
         titlePrimery.text = "Сцены"
         titlePrimery.font = UIFont.systemFont(ofSize: 32, weight: .light)
-        titlePrimery.textColor = darkBlue
+        titlePrimery.textColor = .white
         titlePrimery.textAlignment = .center
         //
         titlePrimery.translatesAutoresizingMaskIntoConstraints = false

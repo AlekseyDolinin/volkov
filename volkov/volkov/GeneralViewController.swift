@@ -6,7 +6,7 @@ class GeneralViewController: UIViewController {
         
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         createBackButton()
     }
     
@@ -14,7 +14,7 @@ class GeneralViewController: UIViewController {
         let configuration = UIImage.SymbolConfiguration(pointSize: 20, weight: .regular)
         let imageArrow = UIImage(systemName: "arrow.backward", withConfiguration: configuration)
         backButton.setImage(imageArrow, for: .normal)
-        backButton.tintColor = darkBlue
+        backButton.tintColor = gold
         backButton.addTarget(self, action: #selector(back_), for: .touchUpInside)
         //
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: backButton)

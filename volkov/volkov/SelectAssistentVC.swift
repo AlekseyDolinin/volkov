@@ -7,20 +7,87 @@ class SelectAssistentVC: UIViewController {
     private let titlePrimery = UILabel()
     private let stack = UIStackView()
     
+    private var assistants = [Assistant]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()        
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         createSubviews()
+        parseAssistents()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        checkDontCompletedSession()
+    }
+    
+    private func checkDontCompletedSession() {
+        print("idSelectAssistent: \(LocalStorage.shared.idSelectAssistent)")
+        print("namePlayer: \(LocalStorage.shared.namePlayer)")
+        
+        // есть незаконченая сессия
+        if LocalStorage.shared.idSelectAssistent != nil && LocalStorage.shared.namePlayer != nil {
+            getAssistent()
+        }
+    }
+    
+    private func getAssistent() {
+        if let idAssistent = LocalStorage.shared.idSelectAssistent {
+            if let idAssistentInt = Int(idAssistent) {
+                let assistant = assistants.filter({ $0.id == idAssistentInt })
+                if let ass = assistant.first, let namePlayer = LocalStorage.shared.namePlayer {
+                    let nameAssistent = "\(ass.surname) \(ass.name) \(ass.middleName)"
+                    showDontCompletedSession(nameAssistent: nameAssistent, namePlayer: namePlayer)
+                }
+            }
+        }
+    }
+        
+    private func showDontCompletedSession(nameAssistent: String, namePlayer: String) {
+        let title = "Игра не была завершена"
+        let message = "Помошник: \(nameAssistent) \nИгрок: \(namePlayer)"
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        let continueAction = UIAlertAction(title: "Продолжить", style: .default) { [weak self] _ in
+            let vc = SelectSceneVC()
+            self?.navigationController?.pushViewController(vc, animated: true)
+        }
+        let newStartAction = UIAlertAction(title: "Начать заново", style: .default) { [weak self] _ in
+            self?.clearAllUD()
+        }
+        alert.addAction(continueAction)
+        alert.addAction(newStartAction)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
+    }
+    
+    private func clearAllUD() {
+        let defaults = UserDefaults.standard
+        let dictionary = defaults.dictionaryRepresentation()
+        dictionary.keys.forEach { key in
+            defaults.removeObject(forKey: key)
+        }
+    }
+    
+    private func parseAssistents() {
+        let json = LocalStorage.shared.jsonData
+        for i in json["assistant"].arrayValue {
+            let assistant = Assistant()
+            assistant.parse(json: i)
+            assistants.append(assistant)
+        }
         createButtonsSelectAssistent()
     }
     
     private func createButtonsSelectAssistent() {
-        for i in 0..<LocalStorage.shared.listAssistent.count {
+        for i in 0..<assistants.count {
             let button = UIButton()
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .light)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .regular)
             button.layer.cornerRadius = 16
-            button.setTitle(LocalStorage.shared.listAssistent[i], for: .normal)
-            button.backgroundColor = darkBlue
+            let title = "\(assistants[i].surname) \(assistants[i].name) \(assistants[i].middleName)"
+            button.setTitle(title, for: .normal)
+            button.setTitleColor(.black, for: .normal)
+            button.backgroundColor = gold
             button.tag = i
             let actionSelect = UIAction { [weak self] _ in
                 self?.selectAssistent(btn: button)
@@ -34,7 +101,9 @@ class SelectAssistentVC: UIViewController {
     }
     
     private func selectAssistent(btn: UIButton) {
-        LocalStorage.shared.nameAssistent = LocalStorage.shared.listAssistent[btn.tag]
+        LocalStorage.shared.selectAssistent = assistants[btn.tag]
+        UserDefaults.standard.setValue(assistants[btn.tag].id, forKey: "idSelectAssistent")
+        //
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.1) {
                 btn.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
@@ -83,11 +152,11 @@ extension SelectAssistentVC {
     
     private func createTitle() {
         viewBack.addSubview(titlePrimery)
-        titlePrimery.font = UIFont.systemFont(ofSize: 24, weight: .light)
+        titlePrimery.font = UIFont.systemFont(ofSize: 24, weight: .medium)
         titlePrimery.text = "Выберите помощника"
         titlePrimery.textAlignment = .center
         titlePrimery.numberOfLines = 0
-        titlePrimery.textColor = darkBlue
+        titlePrimery.textColor = .white
         //
         titlePrimery.translatesAutoresizingMaskIntoConstraints = false
         titlePrimery.leftAnchor.constraint(equalTo: viewBack.leftAnchor, constant: 16).isActive = true
@@ -107,13 +176,3 @@ extension SelectAssistentVC {
         stack.rightAnchor.constraint(equalTo: viewBack.rightAnchor, constant: -16).isActive = true
     }
 }
-
-
-//extension SelectAssistentVC: UIGestureRecognizerDelegate {
-//    
-//    func gestureRecognizer(
-//        _ gestureRecognizer: UIGestureRecognizer,
-//        shouldReceive touch: UITouch) -> Bool {
-//        return false
-//    }
-//}

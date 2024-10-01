@@ -11,7 +11,7 @@ class CreatePlayerVC: GeneralViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = .black
         createSubviews()
     }
     
@@ -50,17 +50,22 @@ class CreatePlayerVC: GeneralViewController {
     }
     
     private func startOver() {
-        clearData()
+        clearAllUD()
         navigationController?.popViewController(animated: true)
     }
+    
     /// удаление данных
-    private func clearData() {
-        
-        
+    private func clearAllUD() {
+        let defaults = UserDefaults.standard
+        let dictionary = defaults.dictionaryRepresentation()
+        dictionary.keys.forEach { key in
+            defaults.removeObject(forKey: key)
+        }
     }
     
     @objc private func editingChangedInput() {
         LocalStorage.shared.namePlayer = inputeNamePlayer.text ?? ""
+        UserDefaults.standard.setValue(inputeNamePlayer.text, forKey: "namePlayer")
         startButton.alpha = inputeNamePlayer.text!.isEmpty ? 0.2 : 1.0
         startButton.isEnabled = !(inputeNamePlayer.text!.isEmpty)
     }
@@ -84,9 +89,6 @@ class CreatePlayerVC: GeneralViewController {
     }
     
     private func startAction() {
-        print("startAction")
-        print("nameAssistent: \(LocalStorage.shared.nameAssistent)")
-        print("namePlayer: \(LocalStorage.shared.namePlayer)")
         DispatchQueue.main.async {
             self.view.endEditing(true)
             let vc = SelectSceneVC()
@@ -110,6 +112,7 @@ extension CreatePlayerVC {
         view.addSubview(scroll)
         scroll.alwaysBounceVertical = true
         scroll.keyboardDismissMode = .onDrag
+        scroll.backgroundColor = .clear
         //
         scroll.translatesAutoresizingMaskIntoConstraints = false
         scroll.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -133,15 +136,19 @@ extension CreatePlayerVC {
     private func createNameAssistent() {
         viewBack.addSubview(nameAssistentLabel)
         nameAssistentLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        nameAssistentLabel.text = LocalStorage.shared.nameAssistent
         nameAssistentLabel.textAlignment = .center
         nameAssistentLabel.numberOfLines = 0
-        nameAssistentLabel.textColor = darkBlue
+        nameAssistentLabel.textColor = .white.withAlphaComponent(0.7)
         //
         nameAssistentLabel.translatesAutoresizingMaskIntoConstraints = false
         nameAssistentLabel.leftAnchor.constraint(equalTo: viewBack.leftAnchor, constant: 16).isActive = true
         nameAssistentLabel.rightAnchor.constraint(equalTo: viewBack.rightAnchor, constant: -16).isActive = true
         nameAssistentLabel.topAnchor.constraint(equalTo: viewBack.safeAreaLayoutGuide.topAnchor, constant: 48).isActive = true
+        //
+        if let selectAssistent = LocalStorage.shared.selectAssistent {
+            nameAssistentLabel.text = "\(selectAssistent.surname) \(selectAssistent.name) \(selectAssistent.middleName)"
+
+        }
     }
     
     private func createTitle() {
@@ -150,7 +157,7 @@ extension CreatePlayerVC {
         titlePrimery.text = "Введите имя игрока"
         titlePrimery.textAlignment = .center
         titlePrimery.numberOfLines = 0
-        titlePrimery.textColor = darkBlue
+        titlePrimery.textColor = .white
         //
         titlePrimery.translatesAutoresizingMaskIntoConstraints = false
         titlePrimery.leftAnchor.constraint(equalTo: viewBack.leftAnchor, constant: 16).isActive = true
@@ -165,9 +172,9 @@ extension CreatePlayerVC {
         inputeNamePlayer.contentVerticalAlignment = .center
         inputeNamePlayer.textAlignment = .center
         inputeNamePlayer.font = UIFont.systemFont(ofSize: 18, weight: .light)
-        inputeNamePlayer.textColor = darkBlue
-        inputeNamePlayer.tintColor = darkBlue
-        inputeNamePlayer.backgroundColor = darkBlue?.withAlphaComponent(0.1)
+        inputeNamePlayer.textColor = .white
+        inputeNamePlayer.tintColor = .white
+        inputeNamePlayer.backgroundColor = .white.withAlphaComponent(0.1)
         inputeNamePlayer.layer.cornerRadius = 8
         inputeNamePlayer.addTarget(self, action: #selector(editingChangedInput), for: .editingChanged)
         //
@@ -184,8 +191,8 @@ extension CreatePlayerVC {
         startButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         startButton.layer.cornerRadius = 8
         startButton.setTitle("Начать", for: .normal)
-        startButton.setTitleColor(.white, for: .normal)
-        startButton.backgroundColor = darkBlue
+        startButton.setTitleColor(.black, for: .normal)
+        startButton.backgroundColor = gold
         startButton.alpha = 0.2
         startButton.isEnabled = false
         let action = UIAction { [weak self] _ in
