@@ -31,7 +31,8 @@ public class API: NSObject {
         do {
             let session = URLSession(configuration: URLSessionConfiguration.default,  delegate: self, delegateQueue: .current)
             let (data, _) = try await session.data(for: request)
-            return JSON(data)
+            let json = JSON(data)
+            return json
         } catch {
             print("Ошибка: \(error.localizedDescription).")
             return nil

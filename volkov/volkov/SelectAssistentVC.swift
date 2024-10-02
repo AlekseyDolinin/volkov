@@ -83,7 +83,10 @@ class SelectAssistentVC: UIViewController {
     
     private func parseAssistents() {
         let json = LocalStorage.shared.jsonData
-        for i in json["assistant"].arrayValue {
+        
+        print(json)
+        
+        for i in json["assistants"].arrayValue {
             let assistant = Assistant()
             assistant.parse(json: i)
             assistants.append(assistant)

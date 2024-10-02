@@ -141,6 +141,8 @@ extension SelectSceneVC {
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateString = formatter.string(from: Date())
         UserDefaults.standard.setValue(dateString, forKey: "finishSession")
+        
+        print("dateString finish: \(dateString)")
         //
         vm.sendAllTags()
     }

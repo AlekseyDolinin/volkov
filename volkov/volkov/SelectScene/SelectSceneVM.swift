@@ -2,6 +2,7 @@ import UIKit
 
 protocol SelectSceneVMDelegate: AnyObject {
     func updateContent()
+    func markSended()
 }
 
 class SelectSceneVM {
@@ -29,7 +30,7 @@ class SelectSceneVM {
             let json = await API.shared._request(link, method: .post, parameters: parameters)
             if let json = json {
                 print(json)
-                
+                self.delegate?.markSended()
             }
         }
     }
@@ -40,6 +41,9 @@ class SelectSceneVM {
         parameters["player"] = ["name": LocalStorage.shared.namePlayer,
                                 "surname": " ",
                                 "middle_name": " "]
+        
+        print("startSession: \(LocalStorage.shared.startSession)")
+        print("finishSession: \(LocalStorage.shared.finishSession)")
         parameters["start_date"] = LocalStorage.shared.startSession
         parameters["finish_date"] = LocalStorage.shared.finishSession
         parameters["labels"] = removeDoublesFromArray(arrayInt: LocalStorage.shared.savedIDsTags ?? [])
