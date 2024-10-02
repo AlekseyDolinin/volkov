@@ -18,6 +18,7 @@ class SelectTagVC: GeneralViewController {
         self.selectCategory = selectCategory
         header.selectScene = selectScene
         header.selectCategory = selectCategory
+        header.setView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -30,11 +31,6 @@ class SelectTagVC: GeneralViewController {
         createSubviews()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        header.setView()
-    }
-    
     private func checkSelectTagForShowButtonSave() {
         let selected = selectCategory.tags.map({ $0.isSelect })
         if selected.contains(true) {
@@ -44,52 +40,29 @@ class SelectTagVC: GeneralViewController {
             saveTagButton.alpha = 0.2
             saveTagButton.isEnabled = false
         }
-        
-        
-//        let selectMarks = selected.filter({ $0 == true })
-//        if selectMarks.contains(true) {
-//            sendTagButton.alpha = 1
-//            sendTagButton.isEnabled = true
-//        } else {
-//            sendTagButton.alpha = 0.2
-//            sendTagButton.isEnabled = false
-//        }
     }
     
-    private func selectMark(indexPath: IndexPath) {
-        
-        
-//        let item = LocalStorage.shared.marks[indexPath.row]
-//        if let isSelect: Bool = item["select"] as? Bool {
-//            LocalStorage.shared.marks[indexPath.row]["select"] = !isSelect
-//            table.reloadRows(at: [indexPath], with: .none)
-//            checkSelectMark()
-//        }
-        
-//        if vm.typeSelectMark == .multi {
-//            let item = LocalStorage.shared.marks[indexPath.row]
-//            if let isSelect: Bool = item["select"] as? Bool {
-//                LocalStorage.shared.marks[indexPath.row]["select"] = !isSelect
-//                table.reloadRows(at: [indexPath], with: .none)
-//                checkSelectMark()
-//            }
-//        }
-//        
-//        if vm.typeSelectMark == .single {
-//            for i in 0..<LocalStorage.shared.marks.count {
-//                LocalStorage.shared.marks[i]["select"] = false
-//            }
-//            table.reloadData()
-//            LocalStorage.shared.marks[indexPath.row]["select"] = true
-//            table.reloadRows(at: [indexPath], with: .none)
-//            checkSelectMark()
-//        }
-        
-        selectCategory.tags[indexPath.row].isSelect.toggle()
-        table.reloadRows(at: [indexPath], with: .none)
+    private func selectTag(indexPath: IndexPath) {
+        if let maxSelect = LocalStorage.shared.categoryMultiSelect[selectCategory.code] {
+            setMulti(indexPath: indexPath, maxSelect: maxSelect)
+        } else {
+            setSingle(indexPath: indexPath)
+        }
         checkSelectTagForShowButtonSave()
     }
     
+    private func setSingle(indexPath: IndexPath) {
+        _ = selectCategory.tags.map({ $0.isSelect = false })
+        table.reloadData()
+        selectCategory.tags[indexPath.row].isSelect = true
+        table.reloadRows(at: [indexPath], with: .none)
+    }
+    
+    private func setMulti(indexPath: IndexPath, maxSelect: Int) {
+        selectCategory.tags[indexPath.row].isSelect.toggle()
+        table.reloadRows(at: [indexPath], with: .none)
+    }
+        
     private func saveTags() {
         let selectedTags = selectCategory.tags.filter({ $0.isSelect == true })
         let selectedIDsTags = selectedTags.map({ $0.id })
@@ -117,7 +90,7 @@ extension SelectTagVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectMark(indexPath: indexPath)
+        selectTag(indexPath: indexPath)
     }
 }
 

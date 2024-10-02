@@ -57,4 +57,7 @@ class LocalStorage: NSObject {
         finishSession = nil
         savedIDsTags = nil
     }
+    
+    
+    let categoryMultiSelect = ["choose_genre": 4, "voice_of_the_people": 7, "hero_values": 3, "pains_of_a_hero": 3]
 }

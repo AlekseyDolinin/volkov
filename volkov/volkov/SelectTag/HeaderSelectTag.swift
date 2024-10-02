@@ -19,15 +19,11 @@ class HeaderSelectTag: UIView {
     }
     
     func setView() {
-//        switch typeSelectMark {
-//        case .multi:
-//            titlePrimery.text = "Выберите несколько меток"
-//        case .single:
-//            titlePrimery.text = "Выберите одну метку"
-//        default:
-//            titlePrimery.text = "Выберите метку"
-//        }
-        titlePrimery.text = "Выберите метку"
+        if let maxSelect = LocalStorage.shared.categoryMultiSelect[selectCategory.code] {
+            titlePrimery.text = "Выберите несколько меток (максимум \(maxSelect))"
+        } else {
+            titlePrimery.text = "Выберите метку"
+        }
         layoutIfNeeded()
     }
 }
