@@ -41,15 +41,15 @@ extension HeaderSelectTag {
     
     private func createTitle() {
         addSubview(titlePrimery)
-        titlePrimery.font = UIFont.systemFont(ofSize: 32, weight: .light)
+        titlePrimery.font = UIFont.systemFont(ofSize: 32, weight: .regular)
         titlePrimery.textColor = .white
         titlePrimery.lineBreakMode = .byWordWrapping
         titlePrimery.numberOfLines = 0
         titlePrimery.textAlignment = .center
         //
         titlePrimery.translatesAutoresizingMaskIntoConstraints = false
-        titlePrimery.topAnchor.constraint(equalTo: topAnchor, constant: 16).isActive = true
-        titlePrimery.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16).isActive = true
+        titlePrimery.topAnchor.constraint(equalTo: topAnchor, constant: 24).isActive = true
+        titlePrimery.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -24).isActive = true
         titlePrimery.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         titlePrimery.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true
     }

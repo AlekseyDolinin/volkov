@@ -6,7 +6,9 @@ class SelectSceneVC: GeneralViewController {
     
     private var table = UITableView()
     private var header = HeaderSelectScene()
-    private let pickButton = UIButton()
+    
+    private var bottomView = UIView()
+    private let sendAllTagsButton = UIButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +35,40 @@ class SelectSceneVC: GeneralViewController {
     private func presentSelectTags(selectScene: Scene) {
         DispatchQueue.main.async {
             if let selectCategory = selectScene.categories.first {
-                let vc = SelectTagVC(selectScene: selectScene, selectCategory: selectCategory)
-                self.navigationController?.pushViewController(vc, animated: true)
+                let vc = SelectTagVC(
+                    selectScene: selectScene,
+                    selectCategory: selectCategory
+                )
+                self.present(vc, animated: true)
             }
         }
+    }
+    
+    private func showAlertTagsSended() {
+        print("showAlertTagsSended")
+    }
+    
+    private func showAlertSendAllTags() {
+        let title = "Отправить все выбраные метки?"
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        let sendAction = UIAlertAction(title: "Отправить", style: .default) { [weak self] _ in
+            self?.sendTags()
+        }
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+        alert.addAction(sendAction)
+        alert.addAction(cancelAction)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
+    }
+    
+    private func sendTags() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateString = formatter.string(from: Date())
+        LocalStorage.shared.finishSession = dateString
+        //
+        vm.sendAllTags()
     }
 }
 
@@ -49,8 +81,10 @@ extension SelectSceneVC: SelectSceneVMDelegate {
         }
     }
     
-    func markSended() {
-        print("markSended")
+    func tagsSended() {
+        DispatchQueue.main.async {
+            self.showAlertTagsSended()
+        }
     }
 }
 
@@ -83,7 +117,9 @@ extension SelectSceneVC {
     
     private func createSubviews() {
         createTable()
-        createPickButton()
+        createBottomView()
+        createBottomView()
+        createSendAllTagsButton()
     }
     
     private func createTable() {
@@ -105,49 +141,33 @@ extension SelectSceneVC {
         table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
     
-    private func createPickButton() {
-        view.addSubview(pickButton)
-        pickButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        pickButton.layer.cornerRadius = 8
-        pickButton.setTitle("Отправить все метки", for: .normal)
-        pickButton.setTitleColor(.black, for: .normal)
-        pickButton.backgroundColor = gold
-//        pickButton.alpha = 0.2
-//        pickButton.isEnabled = false
+    private func createBottomView() {
+        view.addSubview(bottomView)
+        bottomView.backgroundColor = .black
+        //
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+        bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        bottomView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        bottomView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+    }
+    
+    private func createSendAllTagsButton() {
+        bottomView.addSubview(sendAllTagsButton)
+        sendAllTagsButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        sendAllTagsButton.layer.cornerRadius = 8
+        sendAllTagsButton.setTitle("Отправить все метки", for: .normal)
+        sendAllTagsButton.setTitleColor(.black, for: .normal)
+        sendAllTagsButton.backgroundColor = gold
         let action = UIAction { [weak self] _ in
             self?.showAlertSendAllTags()
         }
-        pickButton.addAction(action, for: .touchUpInside)
+        sendAllTagsButton.addAction(action, for: .touchUpInside)
         //
-        pickButton.translatesAutoresizingMaskIntoConstraints = false
-        pickButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
-        pickButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
-        pickButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24).isActive = true
-        pickButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
-    }
-    
-    private func showAlertSendAllTags() {
-        let title = "Отправить все выбраные метки?"
-        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-        let sendAction = UIAlertAction(title: "Отправить", style: .default) { [weak self] _ in
-            self?.sendTags()
-        }
-        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
-        alert.addAction(sendAction)
-        alert.addAction(cancelAction)
-        DispatchQueue.main.async {
-            self.present(alert, animated: true)
-        }
-    }
-    
-    private func sendTags() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let dateString = formatter.string(from: Date())
-        UserDefaults.standard.setValue(dateString, forKey: "finishSession")
-        
-        print("dateString finish: \(dateString)")
-        //
-        vm.sendAllTags()
+        sendAllTagsButton.translatesAutoresizingMaskIntoConstraints = false
+        sendAllTagsButton.leftAnchor.constraint(equalTo: bottomView.leftAnchor, constant: 16).isActive = true
+        sendAllTagsButton.rightAnchor.constraint(equalTo: bottomView.rightAnchor, constant: -16).isActive = true
+        sendAllTagsButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        sendAllTagsButton.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 16).isActive = true
+        sendAllTagsButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
     }
 }

@@ -97,6 +97,11 @@ class CreatePlayerVC: GeneralViewController {
     
     private func startAction() {
         DispatchQueue.main.async {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let dateString = formatter.string(from: Date())
+            LocalStorage.shared.startSession = dateString
+            //
             self.view.endEditing(true)
             let vc = SelectSceneVC()
             self.navigationController?.pushViewController(vc, animated: true)
@@ -152,8 +157,9 @@ extension CreatePlayerVC {
         nameAssistentLabel.rightAnchor.constraint(equalTo: viewBack.rightAnchor, constant: -16).isActive = true
         nameAssistentLabel.topAnchor.constraint(equalTo: viewBack.safeAreaLayoutGuide.topAnchor, constant: 48).isActive = true
         //
-        if let selectAssistent = LocalStorage.shared.selectAssistent {
-            nameAssistentLabel.text = "\(selectAssistent.surname) \(selectAssistent.name) \(selectAssistent.middleName)"
+        let assistentsFiltered = LocalStorage.shared.assistents.filter({ $0.id == LocalStorage.shared.idSelectAssistent })
+        if let assistent = assistentsFiltered.first {
+            nameAssistentLabel.text = "\(assistent.surname) \(assistent.name) \(assistent.middleName)"
         }
     }
     

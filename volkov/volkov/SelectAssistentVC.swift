@@ -6,9 +6,7 @@ class SelectAssistentVC: UIViewController {
     private let viewBack = UIView()
     private let titlePrimery = UILabel()
     private let stack = UIStackView()
-    
-    private var assistants = [Assistant]()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()        
         view.backgroundColor = .black
@@ -17,34 +15,19 @@ class SelectAssistentVC: UIViewController {
         checkDontCompletedSession()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        checkDontCompletedSession()
-    }
-    
     private func checkDontCompletedSession() {        
         // есть незаконченая сессия
-        if LocalStorage.shared.idSelectAssistent != nil && LocalStorage.shared.namePlayer != nil {
-            getAssistent()
-        }
-    }
-    
-    private func getAssistent() {
-        if let idAssistent = LocalStorage.shared.idSelectAssistent {
-            if let idAssistentInt = Int(idAssistent) {
-                let assistant = assistants.filter({ $0.id == idAssistentInt })
-                if let ass = assistant.first, let namePlayer = LocalStorage.shared.namePlayer {
-                    let nameAssistent = "\(ass.surname) \(ass.name) \(ass.middleName)"
-                    showDontCompletedSession(nameAssistent: nameAssistent, namePlayer: namePlayer)
-                }
-            }
+        let idSelectAssistent = UserDefaults.standard.string(forKey: "idSelectAssistent")
+        let namePlayer = UserDefaults.standard.string(forKey: "namePlayer")
+        if idSelectAssistent != nil && namePlayer != nil {
+            print("есть незаконченая сессия")
+            showDontCompletedSession()
         }
     }
         
-    private func showDontCompletedSession(nameAssistent: String, namePlayer: String) {
+    private func showDontCompletedSession() {
         let title = "Игра не была завершена"
-        let message = "Помошник: \(nameAssistent) \nИгрок: \(namePlayer)"
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
         let continueAction = UIAlertAction(title: "Продолжить", style: .default) { [weak self] _ in
             let vc = SelectSceneVC()
             self?.navigationController?.pushViewController(vc, animated: true)
@@ -60,16 +43,29 @@ class SelectAssistentVC: UIViewController {
         }
     }
     
-    // востановление меток из UD
+    // востановление меток из UserDefaults
     private func readUD() {
-        print("востановление меток из UD")
+        print("востановление из UserDefaults")
+        
+        // ids tags
         if let ids = UserDefaults.standard.object(forKey: "selectedIDsTags") {
-            print(ids)
             if let arrayIDsInt: [Int] = ids as? [Int] {
-                print(arrayIDsInt)
+                print("ids: \(arrayIDsInt)")
                 LocalStorage.shared.savedIDsTags = arrayIDsInt
             }
         }
+        
+        // namePlayer
+        let namePlayer = UserDefaults.standard.string(forKey: "namePlayer")
+        if let name = namePlayer {
+            LocalStorage.shared.namePlayer = name
+            print("namePlayer: \(name)")
+        }
+        
+        // idSelectAssistent
+        let idSelectAssistent = UserDefaults.standard.integer(forKey: "idSelectAssistent")
+        LocalStorage.shared.idSelectAssistent = idSelectAssistent
+        print("idSelectAssistent: \(idSelectAssistent)")
     }
     
     private func clearAllUD() {
@@ -78,28 +74,34 @@ class SelectAssistentVC: UIViewController {
         dictionary.keys.forEach { key in
             defaults.removeObject(forKey: key)
         }
-        LocalStorage.shared.savedIDsTags?.removeAll()
+        LocalStorage.shared.jsonData = JSON()
+        LocalStorage.shared.assistents.removeAll()
+        LocalStorage.shared.namePlayer = nil
+        LocalStorage.shared.idSelectAssistent = nil
+        LocalStorage.shared.startSession = nil
+        LocalStorage.shared.finishSession = nil
+        LocalStorage.shared.savedIDsTags = nil
     }
     
     private func parseAssistents() {
         let json = LocalStorage.shared.jsonData
-        
-        print(json)
-        
         for i in json["assistants"].arrayValue {
             let assistant = Assistant()
             assistant.parse(json: i)
-            assistants.append(assistant)
+            LocalStorage.shared.assistents.append(assistant)
         }
         createButtonsSelectAssistent()
     }
     
     private func createButtonsSelectAssistent() {
-        for i in 0..<assistants.count {
+        for i in 0..<LocalStorage.shared.assistents.count {
             let button = UIButton()
             button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .regular)
+            let surname = LocalStorage.shared.assistents[i].surname
+            let name = LocalStorage.shared.assistents[i].name
+            let middleName = LocalStorage.shared.assistents[i].middleName
             button.layer.cornerRadius = 16
-            let title = "\(assistants[i].surname) \(assistants[i].name) \(assistants[i].middleName)"
+            let title = "\(surname) \(name) \(middleName)"
             button.setTitle(title, for: .normal)
             button.setTitleColor(.black, for: .normal)
             button.backgroundColor = gold
@@ -116,8 +118,8 @@ class SelectAssistentVC: UIViewController {
     }
     
     private func selectAssistent(btn: UIButton) {
-        LocalStorage.shared.selectAssistent = assistants[btn.tag]
-        UserDefaults.standard.setValue(assistants[btn.tag].id, forKey: "idSelectAssistent")
+        LocalStorage.shared.idSelectAssistent = LocalStorage.shared.assistents[btn.tag].id
+        UserDefaults.standard.setValue(LocalStorage.shared.assistents[btn.tag].id, forKey: "idSelectAssistent")
         //
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.1) {

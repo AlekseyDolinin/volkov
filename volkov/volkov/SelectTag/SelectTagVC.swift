@@ -1,19 +1,21 @@
 import UIKit
 
 class SelectTagVC: GeneralViewController {
-
-    private var vm: SelectTagVM!
     
+    private var topView = UIView()
+    private var closeButton = UIButton()
     private var table = UITableView()
     private var header = HeaderSelectTag()
+    private var bottomView = UIView()
     private let saveTagButton = UIButton()
+    
+    private var selectScene: Scene!
+    private var selectCategory: Category!
     
     init(selectScene: Scene, selectCategory: Category) {
         super.init(nibName: nil, bundle: nil)
-        vm = SelectTagVM()
-        vm.delegate = self
-        vm.selectScene = selectScene
-        vm.selectCategory = selectCategory
+        self.selectScene = selectScene
+        self.selectCategory = selectCategory
         header.selectScene = selectScene
         header.selectCategory = selectCategory
     }
@@ -33,21 +35,8 @@ class SelectTagVC: GeneralViewController {
         header.setView()
     }
     
-    private func saveTagsAction() {
-//        let title = vm.typeSelectMark == .multi ? "Сохранить выбранные метки?" : "Сохранить выбранную метку?"
-        let alert = UIAlertController(title: "Сохранить выбранные метки?",
-                                      message: nil,
-                                      preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Отмена", style: .destructive))
-        alert.addAction(UIAlertAction(title: "Сохранить", style: .default, handler: { action  in
-            self.showLoader()
-            self.vm.saveTags()
-        }))
-        present(alert, animated: true)
-    }
-    
     private func checkSelectTagForShowButtonSave() {
-        let selected = vm.selectCategory.tags.map({ $0.isSelect })
+        let selected = selectCategory.tags.map({ $0.isSelect })
         if selected.contains(true) {
             saveTagButton.alpha = 1
             saveTagButton.isEnabled = true
@@ -96,25 +85,18 @@ class SelectTagVC: GeneralViewController {
 //            checkSelectMark()
 //        }
         
-        vm.selectCategory.tags[indexPath.row].isSelect.toggle()
+        selectCategory.tags[indexPath.row].isSelect.toggle()
         table.reloadRows(at: [indexPath], with: .none)
         checkSelectTagForShowButtonSave()
     }
     
-}
-
-
-extension SelectTagVC: SelectTagVMDelegate {
-                            
-    func updateContent() {
-        print("updateContent")
-    }
-    
-    func saveTagsSucces() {
-        DispatchQueue.main.asyncAfter(wallDeadline: .now() + 1.0) {
-            self.hideLoader()
-            self.navigationController?.popViewController(animated: true)
-        }
+    private func saveTags() {
+        let selectedTags = selectCategory.tags.filter({ $0.isSelect == true })
+        let selectedIDsTags = selectedTags.map({ $0.id })
+        //
+        let arrayLaterSavedTags: [Int] = LocalStorage.shared.savedIDsTags ?? []
+        LocalStorage.shared.savedIDsTags = arrayLaterSavedTags + selectedIDsTags
+        dismiss(animated: true)
     }
 }
 
@@ -122,7 +104,7 @@ extension SelectTagVC: SelectTagVMDelegate {
 extension SelectTagVC: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return vm.selectCategory.tags.count
+        return selectCategory.tags.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -130,7 +112,7 @@ extension SelectTagVC: UITableViewDelegate, UITableViewDataSource {
                                                        for: indexPath) as? SelectTagCell else {
             fatalError("Unable deque cell...")
         }
-        cell.tag_ = vm.selectCategory.tags[indexPath.row]
+        cell.tag_ = selectCategory.tags[indexPath.row]
         return cell
     }
     
@@ -143,8 +125,71 @@ extension SelectTagVC: UITableViewDelegate, UITableViewDataSource {
 extension SelectTagVC {
     
     private func createSubviews() {
-        createTable()
+        createTopView()
+        createCloseButton()
+        createBottomView()
         createSendMarkButton()
+        createTable()
+    }
+    
+    private func createTopView() {
+        view.addSubview(topView)
+        topView.backgroundColor = gold
+        //
+        topView.translatesAutoresizingMaskIntoConstraints = false
+        topView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        topView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        topView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        topView.heightAnchor.constraint(equalToConstant: 40).isActive = true
+    }
+    
+    private func createCloseButton() {
+        topView.addSubview(closeButton)
+        closeButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        closeButton.setTitle("Закрыть", for: .normal)
+        closeButton.setTitleColor(.black, for: .normal)
+        let action = UIAction { [weak self] _ in
+            self?.dismiss(animated: true)
+        }
+        closeButton.addAction(action, for: .touchUpInside)
+        //
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.topAnchor.constraint(equalTo: topView.topAnchor).isActive = true
+        closeButton.leftAnchor.constraint(equalTo: topView.leftAnchor).isActive = true
+        closeButton.bottomAnchor.constraint(equalTo: topView.bottomAnchor).isActive = true
+        closeButton.widthAnchor.constraint(equalToConstant: 90).isActive = true
+    }
+    
+    private func createBottomView() {
+        view.addSubview(bottomView)
+        bottomView.backgroundColor = .black
+        //
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+        bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        bottomView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        bottomView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+    }
+    
+    private func createSendMarkButton() {
+        bottomView.addSubview(saveTagButton)
+        saveTagButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        saveTagButton.layer.cornerRadius = 8
+        saveTagButton.setTitleColor(.black, for: .normal)
+        saveTagButton.backgroundColor = gold
+        saveTagButton.alpha = 0.2
+        saveTagButton.isEnabled = false
+        saveTagButton.setTitle("Сохранить выбор", for: .normal)
+        let action = UIAction { [weak self] _ in
+            self?.saveTags()
+        }
+        saveTagButton.addAction(action, for: .touchUpInside)
+        //
+        saveTagButton.translatesAutoresizingMaskIntoConstraints = false
+        saveTagButton.leftAnchor.constraint(equalTo: bottomView.leftAnchor, constant: 16).isActive = true
+        saveTagButton.rightAnchor.constraint(equalTo: bottomView.rightAnchor, constant: -16).isActive = true
+        saveTagButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
+        saveTagButton.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 16).isActive = true
+        saveTagButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
     }
     
     private func createTable() {
@@ -160,30 +205,9 @@ extension SelectTagVC {
         table.createClearFooter()
         //
         table.translatesAutoresizingMaskIntoConstraints = false
-        table.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        table.topAnchor.constraint(equalTo: topView.bottomAnchor).isActive = true
         table.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         table.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-    }
-    
-    private func createSendMarkButton() {
-        view.addSubview(saveTagButton)
-        saveTagButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        saveTagButton.layer.cornerRadius = 8
-        saveTagButton.setTitleColor(.black, for: .normal)
-        saveTagButton.backgroundColor = gold
-        saveTagButton.alpha = 0.2
-        saveTagButton.isEnabled = false
-        saveTagButton.setTitle("Сохранить выбор", for: .normal)
-        let action = UIAction { [weak self] _ in
-            self?.saveTagsAction()
-        }
-        saveTagButton.addAction(action, for: .touchUpInside)
-        //
-        saveTagButton.translatesAutoresizingMaskIntoConstraints = false
-        saveTagButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
-        saveTagButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
-        saveTagButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24).isActive = true
-        saveTagButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        table.bottomAnchor.constraint(equalTo: bottomView.topAnchor).isActive = true
     }
 }

@@ -4,12 +4,32 @@ class LocalStorage: NSObject {
 
     static let shared = LocalStorage()
     var jsonData = JSON()
-    var selectAssistent: Assistant!
     
-    var idSelectAssistent = UserDefaults.standard.string(forKey: "idSelectAssistent")
-    var namePlayer = UserDefaults.standard.string(forKey: "namePlayer")
-    var startSession = UserDefaults.standard.string(forKey: "startSession")
-    var finishSession = UserDefaults.standard.string(forKey: "finishSession")
+    var assistents: [Assistant]! = []
+    
+    var namePlayer: String? {
+        didSet {
+            UserDefaults.standard.string(forKey: "namePlayer")
+        }
+    }
+    
+    var idSelectAssistent: Int? {
+        didSet {
+            UserDefaults.standard.string(forKey: "idSelectAssistent")
+        }
+    }
+    
+    var startSession: String? {
+        didSet {
+            UserDefaults.standard.setValue(startSession, forKey: "startSession")
+        }
+    }
+    
+    var finishSession: String? {
+        didSet {
+            UserDefaults.standard.setValue(finishSession, forKey: "finishSession")
+        }
+    }
     
     var savedIDsTags: [Int]? {
         didSet {

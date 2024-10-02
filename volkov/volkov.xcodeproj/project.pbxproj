@@ -33,7 +33,6 @@
 		103040D42CA8A427009C5A38 /* SelectTagVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103040D32CA8A426009C5A38 /* SelectTagVC.swift */; };
 		103040D62CA8A446009C5A38 /* SelectTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103040D52CA8A446009C5A38 /* SelectTagCell.swift */; };
 		103040D82CA8A459009C5A38 /* HeaderSelectTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103040D72CA8A459009C5A38 /* HeaderSelectTag.swift */; };
-		103041112CA9F99A009C5A38 /* SelectTagVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103041102CA9F99A009C5A38 /* SelectTagVM.swift */; };
 		103041132CAA036C009C5A38 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103041122CAA036C009C5A38 /* UIViewController.swift */; };
 		103041152CAA0431009C5A38 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103041142CAA0431009C5A38 /* Loader.swift */; };
 		10472B2C2CAC677D00B5CB2E /* Assistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10472B2B2CAC677D00B5CB2E /* Assistant.swift */; };
@@ -72,7 +71,6 @@
 		103040D32CA8A426009C5A38 /* SelectTagVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTagVC.swift; sourceTree = "<group>"; };
 		103040D52CA8A446009C5A38 /* SelectTagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTagCell.swift; sourceTree = "<group>"; };
 		103040D72CA8A459009C5A38 /* HeaderSelectTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSelectTag.swift; sourceTree = "<group>"; };
-		103041102CA9F99A009C5A38 /* SelectTagVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTagVM.swift; sourceTree = "<group>"; };
 		103041122CAA036C009C5A38 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		103041142CAA0431009C5A38 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		10472B2B2CAC677D00B5CB2E /* Assistant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assistant.swift; sourceTree = "<group>"; };
@@ -205,7 +203,6 @@
 			isa = PBXGroup;
 			children = (
 				103040D32CA8A426009C5A38 /* SelectTagVC.swift */,
-				103041102CA9F99A009C5A38 /* SelectTagVM.swift */,
 				103040D72CA8A459009C5A38 /* HeaderSelectTag.swift */,
 				103040D52CA8A446009C5A38 /* SelectTagCell.swift */,
 			);
@@ -318,7 +315,6 @@
 				103040C62CA899FB009C5A38 /* FilteredPerformanceVC.swift in Sources */,
 				103040A02CA72E30009C5A38 /* GeneralViewController.swift in Sources */,
 				103040BB2CA88768009C5A38 /* SelectSceneVC.swift in Sources */,
-				103041112CA9F99A009C5A38 /* SelectTagVM.swift in Sources */,
 				10472B2E2CAC680B00B5CB2E /* Scene.swift in Sources */,
 				1030407A2CA681C8009C5A38 /* SceneDelegate.swift in Sources */,
 				103040C42CA894F4009C5A38 /* UITable.swift in Sources */,
@@ -461,11 +457,12 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = volkov/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Мир театр";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -474,9 +471,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = labmedia.mirteatr.vovlekay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -491,11 +492,12 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = volkov/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Мир театр";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -504,9 +506,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = labmedia.mirteatr.vovlekay;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

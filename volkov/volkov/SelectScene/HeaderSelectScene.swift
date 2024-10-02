@@ -26,7 +26,7 @@ extension HeaderSelectScene {
     private func createTitle() {
         addSubview(titlePrimery)
         titlePrimery.text = "Сцены"
-        titlePrimery.font = UIFont.systemFont(ofSize: 32, weight: .light)
+        titlePrimery.font = UIFont.systemFont(ofSize: 32, weight: .regular)
         titlePrimery.textColor = .white
         titlePrimery.textAlignment = .center
         //

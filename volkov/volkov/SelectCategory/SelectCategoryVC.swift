@@ -10,6 +10,7 @@ class SelectCategoryVC: GeneralViewController {
     init(selectScene: Scene) {
         super.init(nibName: nil, bundle: nil)
         self.selectScene = selectScene
+        header.selectScene = selectScene
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -42,9 +43,12 @@ extension SelectCategoryVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         DispatchQueue.main.async {
-            let vc = SelectTagVC(selectScene: self.selectScene, 
-                                  selectCategory: self.selectScene.categories[indexPath.row])
-            self.navigationController?.pushViewController(vc, animated: true)
+            let vc = SelectTagVC(
+                selectScene: self.selectScene,
+                selectCategory: self.selectScene.categories[indexPath.row]
+            )
+            self.present(vc, animated: true)
+//            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }

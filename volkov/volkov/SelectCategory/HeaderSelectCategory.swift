@@ -4,6 +4,12 @@ class HeaderSelectCategory: UIView {
     
     private let titlePrimery = UILabel()
     
+    var selectScene: Scene! {
+        didSet {
+            titlePrimery.text = selectScene.name
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         createSubViews()
@@ -25,8 +31,7 @@ extension HeaderSelectCategory {
     
     private func createTitle() {
         addSubview(titlePrimery)
-        titlePrimery.text = "В данной сцене несколько частей"
-        titlePrimery.font = UIFont.systemFont(ofSize: 32, weight: .light)
+        titlePrimery.font = UIFont.systemFont(ofSize: 32, weight: .regular)
         titlePrimery.textColor = .white
         titlePrimery.numberOfLines = 0
         titlePrimery.lineBreakMode = .byWordWrapping
