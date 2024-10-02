@@ -27,6 +27,27 @@ class SelectSceneVC: GeneralViewController {
         checkCompletedFinalScene()
     }
     
+    override func back_() {
+        let title = "Хотите начать с начала?"
+        let message = "Все введенные данные и сохранённые метки будут удалены."
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let backAction = UIAlertAction(title: "Да, начать сначала", style: .default) { [weak self] _ in
+            LocalStorage.shared.clearAllUD()
+            if let viewControllers = self?.navigationController?.viewControllers {
+                viewControllers.forEach { vc in
+                    if vc is CreatePlayerVC {
+                        vc.removeFromParent()
+                    }
+                }
+            }
+            self?.navigationController?.popViewController(animated: true)
+        }
+        let closeAlert = UIAlertAction(title: "Отмена", style: .destructive)
+        alert.addAction(closeAlert)
+        alert.addAction(backAction)
+        present(alert, animated: true)
+    }
+    
     private func checkCompletedFinalScene() {
         if let finalScene = vm.scenes.first(where: { $0.isFinal == true }) {
             let savedTags = LocalStorage.shared.savedIDsTags

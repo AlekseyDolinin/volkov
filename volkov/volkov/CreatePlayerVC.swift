@@ -42,24 +42,6 @@ class CreatePlayerVC: GeneralViewController {
         }
     }
     
-    override func back_() {
-        let title = "Хотите начать с начала?"
-        let message = "Все введенные данные и сохранённые метки будут удалены."
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let backAction = UIAlertAction(title: "Да, начать сначала", style: .default) { [weak self] _ in
-            self?.startOver()
-        }
-        let closeAlert = UIAlertAction(title: "Отмена", style: .destructive)
-        alert.addAction(closeAlert)
-        alert.addAction(backAction)
-        present(alert, animated: true)
-    }
-    
-    private func startOver() {
-        LocalStorage.shared.clearAllUD()
-        navigationController?.popViewController(animated: true)
-    }
-    
     @objc private func editingChangedInput() {
         LocalStorage.shared.namePlayer = inputeNamePlayer.text
         //
