@@ -92,12 +92,13 @@ extension SplashVC {
     
     private func createLogoLabmedia() {
         view.addSubview(logoLabmedia)
-        logoLabmedia.image = UIImage(named: "logoBB")
+        logoLabmedia.image = UIImage(named: "logoBB_white")
         logoLabmedia.contentMode = .scaleAspectFit
+        logoLabmedia.alpha = 0.7
         //
         logoLabmedia.translatesAutoresizingMaskIntoConstraints = false
         logoLabmedia.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        logoLabmedia.heightAnchor.constraint(equalToConstant: 80).isActive  = true
+        logoLabmedia.heightAnchor.constraint(equalToConstant: 60).isActive  = true
         logoLabmedia.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16).isActive = true
     }
     
@@ -109,6 +110,6 @@ extension SplashVC {
         //
         loader.translatesAutoresizingMaskIntoConstraints = false
         loader.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        loader.topAnchor.constraint(equalTo: logoLabmedia.topAnchor, constant: -24).isActive = true
+        loader.bottomAnchor.constraint(equalTo: logoLabmedia.topAnchor, constant: -24).isActive = true
     }
 }
