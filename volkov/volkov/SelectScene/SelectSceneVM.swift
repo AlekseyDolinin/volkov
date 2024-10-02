@@ -12,14 +12,15 @@ class SelectSceneVM {
     var scenes = [Scene]()
     
     func parseData() {
-        let json = LocalStorage.shared.jsonData
-        for i in json["scenes"].arrayValue {
-            let scene = Scene()
-            scene.parse(json: i)
-            scenes.append(scene)
-            scenes.sort(by: { $0.name < $1.name })
+        if let json = LocalStorage.shared.jsonData {
+            for i in json["scenes"].arrayValue {
+                let scene = Scene()
+                scene.parse(json: i)
+                scenes.append(scene)
+                scenes.sort(by: { $0.name < $1.name })
+            }
+            delegate?.updateContent()
         }
-        delegate?.updateContent()
     }
     
     func sendAllTags() {
@@ -27,11 +28,11 @@ class SelectSceneVM {
             let link = "https://mirteatr.vovlekay.online/api/save_session/"
             let parameters = setParameters()
             print("parameters: \(parameters)")
-//            let json = await API.shared._request(link, method: .post, parameters: parameters)
-//            if let json = json {
-//                print(json)
-//                self.delegate?.tagsSended()
-//            }
+            let json = await API.shared._request(link, method: .post, parameters: parameters)
+            if let json = json {
+                print(json)
+                self.delegate?.tagsSended()
+            }
         }
     }
     

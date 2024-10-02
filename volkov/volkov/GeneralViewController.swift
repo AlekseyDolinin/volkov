@@ -54,7 +54,7 @@ class GeneralViewController: UIViewController {
             //
             var title = ""
             if LocalStorage.shared.namePlayer == nil {
-                title = "Помощник: \(assistent.name)"
+                title = "Помощник: \(assistentName)"
             } else {
                 title = "Помощник: \(assistentName)\nИгрок: \(LocalStorage.shared.namePlayer!)"
             }

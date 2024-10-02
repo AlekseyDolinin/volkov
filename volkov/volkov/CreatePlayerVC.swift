@@ -34,6 +34,12 @@ class CreatePlayerVC: GeneralViewController {
         DispatchQueue.main.async {
             self.inputeNamePlayer.becomeFirstResponder()
         }
+        if LocalStorage.shared.namePlayer != nil {
+            inputeNamePlayer.text = LocalStorage.shared.namePlayer
+            //
+            startButton.alpha = inputeNamePlayer.text!.isEmpty ? 0.2 : 1.0
+            startButton.isEnabled = !(inputeNamePlayer.text!.isEmpty)
+        }
     }
     
     override func back_() {
@@ -50,28 +56,12 @@ class CreatePlayerVC: GeneralViewController {
     }
     
     private func startOver() {
-        clearAllUD()
+        LocalStorage.shared.clearAllUD()
         navigationController?.popViewController(animated: true)
     }
     
-    /// удаление данных
-    private func clearAllUD() {
-        let defaults = UserDefaults.standard
-        let dictionary = defaults.dictionaryRepresentation()
-        dictionary.keys.forEach { key in
-            defaults.removeObject(forKey: key)
-        }
-        LocalStorage.shared.savedIDsTags?.removeAll()
-    }
-    
     @objc private func editingChangedInput() {
-        LocalStorage.shared.namePlayer = inputeNamePlayer.text ?? ""
-        UserDefaults.standard.setValue(inputeNamePlayer.text, forKey: "namePlayer")
-        //
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let dateString = formatter.string(from: Date())
-        UserDefaults.standard.setValue(dateString, forKey: "startSession")
+        LocalStorage.shared.namePlayer = inputeNamePlayer.text
         //
         startButton.alpha = inputeNamePlayer.text!.isEmpty ? 0.2 : 1.0
         startButton.isEnabled = !(inputeNamePlayer.text!.isEmpty)

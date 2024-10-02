@@ -19,16 +19,9 @@ class SplashVM {
             }
             if let json = json {
                 delegate?.updateContent()
-                saveJSON(json: json, key: "data")
                 LocalStorage.shared.jsonData = json
                 delegate?.updateContent()
             }
-        }
-    }
-    
-    private func saveJSON(json: JSON, key: String){
-        if let jsonString = json.rawString() {
-            UserDefaults.standard.setValue(jsonString, forKey: key)
         }
     }
     

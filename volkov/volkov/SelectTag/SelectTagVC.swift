@@ -140,7 +140,6 @@ extension SelectTagVC {
         topView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         topView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         topView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        topView.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
     private func createCloseButton() {
@@ -154,10 +153,11 @@ extension SelectTagVC {
         closeButton.addAction(action, for: .touchUpInside)
         //
         closeButton.translatesAutoresizingMaskIntoConstraints = false
-        closeButton.topAnchor.constraint(equalTo: topView.topAnchor).isActive = true
+        closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         closeButton.leftAnchor.constraint(equalTo: topView.leftAnchor).isActive = true
         closeButton.bottomAnchor.constraint(equalTo: topView.bottomAnchor).isActive = true
         closeButton.widthAnchor.constraint(equalToConstant: 90).isActive = true
+        closeButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
     private func createBottomView() {

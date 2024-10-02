@@ -33,7 +33,19 @@ final class SceneCell: UITableViewCell {
     }
     
     private func setMarkSignificant() {
-        markSignificant.isHidden = !scene.isSignificant
+//        markSignificant.isHidden = !scene.isSignificant
+        
+        let savedTags = LocalStorage.shared.savedIDsTags
+        var sceneTags: [Tag] = []
+        let sceneСategories = scene.categories
+        for i in sceneСategories {
+            sceneTags += i.tags
+        }
+        let sceneIDsTags = sceneTags.map({ $0.id })
+        let setSavedTags: Set<Int> = Set(savedTags ?? [])
+        let setSceneIDsTags: Set<Int> = Set(sceneIDsTags)
+        let intersection = setSavedTags.intersection(setSceneIDsTags)
+        markSignificant.isHidden = intersection.isEmpty
     }
     
     private func setMarkMultiCategory() {

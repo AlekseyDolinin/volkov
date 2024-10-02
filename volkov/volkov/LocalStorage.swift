@@ -3,19 +3,26 @@ import UIKit
 class LocalStorage: NSObject {
 
     static let shared = LocalStorage()
-    var jsonData = JSON()
     
     var assistents: [Assistant]! = []
     
+    var jsonData: JSON! {
+        didSet {
+            if let jsonString = jsonData.rawString() {
+                UserDefaults.standard.setValue(jsonString, forKey: "data")
+            }
+        }
+    }
+    
     var namePlayer: String? {
         didSet {
-            UserDefaults.standard.string(forKey: "namePlayer")
+            UserDefaults.standard.setValue(namePlayer, forKey: "namePlayer")
         }
     }
     
     var idSelectAssistent: Int? {
         didSet {
-            UserDefaults.standard.string(forKey: "idSelectAssistent")
+            UserDefaults.standard.setValue(idSelectAssistent, forKey: "idSelectAssistent")
         }
     }
     
@@ -35,5 +42,19 @@ class LocalStorage: NSObject {
         didSet {
             UserDefaults.standard.setValue(savedIDsTags, forKey: "selectedIDsTags")
         }
+    }
+    
+    
+    func clearAllUD() {
+        let defaults = UserDefaults.standard
+        let dictionary = defaults.dictionaryRepresentation()
+        dictionary.keys.forEach { key in
+            defaults.removeObject(forKey: key)
+        }
+        namePlayer = nil
+        idSelectAssistent = nil
+        startSession = nil
+        finishSession = nil
+        savedIDsTags = nil
     }
 }

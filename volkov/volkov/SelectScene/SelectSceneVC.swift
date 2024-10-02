@@ -20,6 +20,30 @@ class SelectSceneVC: GeneralViewController {
         header.layoutIfNeeded()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        table.reloadData()
+        
+        checkCompletedFinalScene()
+    }
+    
+    private func checkCompletedFinalScene() {
+        if let finalScene = vm.scenes.first(where: { $0.isFinal == true }) {
+            let savedTags = LocalStorage.shared.savedIDsTags
+            var sceneTags: [Tag] = []
+            let sceneСategories = finalScene.categories
+            for i in sceneСategories {
+                sceneTags += i.tags
+            }
+            let sceneIDsTags = sceneTags.map({ $0.id })
+            let setSavedTags: Set<Int> = Set(savedTags ?? [])
+            let setSceneIDsTags: Set<Int> = Set(sceneIDsTags)
+            let intersection = setSavedTags.intersection(setSceneIDsTags)
+
+            bottomView.isHidden = intersection.isEmpty
+        }
+    }
+    
     private func selectScene(index: Int) {
         let countPartInSelectScene = vm.scenes[index].categories.count
         countPartInSelectScene == 1 ? presentSelectTags(selectScene: vm.scenes[index]) : presentSelectPart(selectScene: vm.scenes[index])
@@ -39,6 +63,7 @@ class SelectSceneVC: GeneralViewController {
                     selectScene: selectScene,
                     selectCategory: selectCategory
                 )
+                vc.modalPresentationStyle = .fullScreen
                 self.present(vc, animated: true)
             }
         }
@@ -144,6 +169,7 @@ extension SelectSceneVC {
     private func createBottomView() {
         view.addSubview(bottomView)
         bottomView.backgroundColor = .black
+        bottomView.isHidden = true
         //
         bottomView.translatesAutoresizingMaskIntoConstraints = false
         bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true

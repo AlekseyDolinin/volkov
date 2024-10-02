@@ -23,6 +23,11 @@ class SelectCategoryVC: GeneralViewController {
         createSubviews()
         header.layoutIfNeeded()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        table.reloadData()
+    }
 }
 
 
@@ -47,8 +52,8 @@ extension SelectCategoryVC: UITableViewDelegate, UITableViewDataSource {
                 selectScene: self.selectScene,
                 selectCategory: self.selectScene.categories[indexPath.row]
             )
+            vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true)
-//            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
