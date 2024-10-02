@@ -48,6 +48,10 @@ extension SelectSceneVC: SelectSceneVMDelegate {
             self.table.reloadData()
         }
     }
+    
+    func markSended() {
+        print("markSended")
+    }
 }
 
 
