@@ -6,7 +6,7 @@ class SelectTagVC: GeneralViewController {
     
     private var table = UITableView()
     private var header = HeaderSelectTag()
-    private let sendTagButton = UIButton()
+    private let saveTagButton = UIButton()
     
     init(selectScene: Scene, selectCategory: Category) {
         super.init(nibName: nil, bundle: nil)
@@ -33,7 +33,7 @@ class SelectTagVC: GeneralViewController {
         header.setView()
     }
     
-    private func sendMarkAction() {
+    private func saveTagsAction() {
 //        let title = vm.typeSelectMark == .multi ? "Сохранить выбранные метки?" : "Сохранить выбранную метку?"
         let alert = UIAlertController(title: "Сохранить выбранные метки?",
                                       message: nil,
@@ -46,21 +46,14 @@ class SelectTagVC: GeneralViewController {
         present(alert, animated: true)
     }
     
-    private func checkSelectMark() {
-        
-        
-//        
-        
+    private func checkSelectTagForShowButtonSave() {
         let selected = vm.selectCategory.tags.map({ $0.isSelect })
-        
-        print(selected)
-        
         if selected.contains(true) {
-            sendTagButton.alpha = 1
-            sendTagButton.isEnabled = true
+            saveTagButton.alpha = 1
+            saveTagButton.isEnabled = true
         } else {
-            sendTagButton.alpha = 0.2
-            sendTagButton.isEnabled = false
+            saveTagButton.alpha = 0.2
+            saveTagButton.isEnabled = false
         }
         
         
@@ -103,10 +96,9 @@ class SelectTagVC: GeneralViewController {
 //            checkSelectMark()
 //        }
         
-        print("!!!!!!")
         vm.selectCategory.tags[indexPath.row].isSelect.toggle()
         table.reloadRows(at: [indexPath], with: .none)
-        checkSelectMark()
+        checkSelectTagForShowButtonSave()
     }
     
 }
@@ -119,7 +111,6 @@ extension SelectTagVC: SelectTagVMDelegate {
     }
     
     func saveTagsSucces() {
-        print("saveMarkSucces")
         DispatchQueue.main.asyncAfter(wallDeadline: .now() + 1.0) {
             self.hideLoader()
             self.navigationController?.popViewController(animated: true)
@@ -176,24 +167,23 @@ extension SelectTagVC {
     }
     
     private func createSendMarkButton() {
-        view.addSubview(sendTagButton)
-        sendTagButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        sendTagButton.layer.cornerRadius = 8
-        sendTagButton.setTitleColor(.black, for: .normal)
-        sendTagButton.backgroundColor = gold
-        sendTagButton.alpha = 0.2
-        sendTagButton.isEnabled = false
-//        let title = vm.typeSelectMark == .multi ? "Сохранить метки" : "Сохранить метку"
-        sendTagButton.setTitle("Сохранить метки", for: .normal)
+        view.addSubview(saveTagButton)
+        saveTagButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        saveTagButton.layer.cornerRadius = 8
+        saveTagButton.setTitleColor(.black, for: .normal)
+        saveTagButton.backgroundColor = gold
+        saveTagButton.alpha = 0.2
+        saveTagButton.isEnabled = false
+        saveTagButton.setTitle("Сохранить выбор", for: .normal)
         let action = UIAction { [weak self] _ in
-            self?.sendMarkAction()
+            self?.saveTagsAction()
         }
-        sendTagButton.addAction(action, for: .touchUpInside)
+        saveTagButton.addAction(action, for: .touchUpInside)
         //
-        sendTagButton.translatesAutoresizingMaskIntoConstraints = false
-        sendTagButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
-        sendTagButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
-        sendTagButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
-        sendTagButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        saveTagButton.translatesAutoresizingMaskIntoConstraints = false
+        saveTagButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
+        saveTagButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
+        saveTagButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24).isActive = true
+        saveTagButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
     }
 }

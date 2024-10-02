@@ -22,10 +22,7 @@ class SelectAssistentVC: UIViewController {
 //        checkDontCompletedSession()
     }
     
-    private func checkDontCompletedSession() {
-        print("idSelectAssistent: \(LocalStorage.shared.idSelectAssistent)")
-        print("namePlayer: \(LocalStorage.shared.namePlayer)")
-        
+    private func checkDontCompletedSession() {        
         // есть незаконченая сессия
         if LocalStorage.shared.idSelectAssistent != nil && LocalStorage.shared.namePlayer != nil {
             getAssistent()
@@ -51,6 +48,7 @@ class SelectAssistentVC: UIViewController {
         let continueAction = UIAlertAction(title: "Продолжить", style: .default) { [weak self] _ in
             let vc = SelectSceneVC()
             self?.navigationController?.pushViewController(vc, animated: true)
+            self?.readUD()
         }
         let newStartAction = UIAlertAction(title: "Начать заново", style: .default) { [weak self] _ in
             self?.clearAllUD()
@@ -62,12 +60,25 @@ class SelectAssistentVC: UIViewController {
         }
     }
     
+    // востановление меток из UD
+    private func readUD() {
+        print("востановление меток из UD")
+        if let ids = UserDefaults.standard.object(forKey: "selectedIDsTags") {
+            print(ids)
+            if let arrayIDsInt: [Int] = ids as? [Int] {
+                print(arrayIDsInt)
+                LocalStorage.shared.savedIDsTags = arrayIDsInt
+            }
+        }
+    }
+    
     private func clearAllUD() {
         let defaults = UserDefaults.standard
         let dictionary = defaults.dictionaryRepresentation()
         dictionary.keys.forEach { key in
             defaults.removeObject(forKey: key)
         }
+        LocalStorage.shared.savedIDsTags?.removeAll()
     }
     
     private func parseAssistents() {

@@ -61,6 +61,7 @@ class CreatePlayerVC: GeneralViewController {
         dictionary.keys.forEach { key in
             defaults.removeObject(forKey: key)
         }
+        LocalStorage.shared.savedIDsTags?.removeAll()
     }
     
     @objc private func editingChangedInput() {
@@ -70,7 +71,6 @@ class CreatePlayerVC: GeneralViewController {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateString = formatter.string(from: Date())
-        print("dateString: \(dateString)")
         UserDefaults.standard.setValue(dateString, forKey: "startSession")
         //
         startButton.alpha = inputeNamePlayer.text!.isEmpty ? 0.2 : 1.0

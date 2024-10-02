@@ -105,32 +105,43 @@ extension SelectSceneVC {
         view.addSubview(pickButton)
         pickButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         pickButton.layer.cornerRadius = 8
-        pickButton.setTitle("Подобрать", for: .normal)
+        pickButton.setTitle("Отправить все метки", for: .normal)
         pickButton.setTitleColor(.black, for: .normal)
         pickButton.backgroundColor = gold
-        pickButton.alpha = 0.2
-        pickButton.isEnabled = false
+//        pickButton.alpha = 0.2
+//        pickButton.isEnabled = false
         let action = UIAction { [weak self] _ in
-            self?.pickAction()
+            self?.showAlertSendAllTags()
         }
         pickButton.addAction(action, for: .touchUpInside)
         //
         pickButton.translatesAutoresizingMaskIntoConstraints = false
         pickButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
         pickButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16).isActive = true
-        pickButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40).isActive = true
+        pickButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -24).isActive = true
         pickButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
     }
     
+    private func showAlertSendAllTags() {
+        let title = "Отправить все выбраные метки?"
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        let sendAction = UIAlertAction(title: "Отправить", style: .default) { [weak self] _ in
+            self?.sendTags()
+        }
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+        alert.addAction(sendAction)
+        alert.addAction(cancelAction)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true)
+        }
+    }
     
-    
-    private func pickAction() {
+    private func sendTags() {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateString = formatter.string(from: Date())
-        print("dateString finishSession: \(dateString)")
         UserDefaults.standard.setValue(dateString, forKey: "finishSession")
         //
-        vm.pickAction()
+        vm.sendAllTags()
     }
 }
