@@ -1,6 +1,6 @@
 import UIKit
 
-class SelectAssistentVC: UIViewController {
+class SelectAssistentVC: GeneralViewController {
 
     private let scroll = UIScrollView()
     private let viewBack = UIView()
@@ -13,9 +13,11 @@ class SelectAssistentVC: UIViewController {
         parseAssistents()
         createSubviews()
         checkDontCompletedSession()
+        backButton.isHidden = true
+        infoButton.isHidden = true
     }
     
-    private func checkDontCompletedSession() {        
+    private func checkDontCompletedSession() {
         // есть незаконченая сессия
         let idSelectAssistent = UserDefaults.standard.string(forKey: "idSelectAssistent")
         let namePlayer = UserDefaults.standard.string(forKey: "namePlayer")
@@ -110,8 +112,8 @@ class SelectAssistentVC: UIViewController {
                 btn.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             } completion: { _ in
                 btn.transform = .identity
-                let vc = CreatePlayerVC()
-                self.navigationController?.pushViewController(vc, animated: true)
+                let vc = CreatePlayerVC(nc: self.navigationController)
+                self.present(vc, animated: true)
             }
         }
     }

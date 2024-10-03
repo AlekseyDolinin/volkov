@@ -2,12 +2,26 @@ import UIKit
 
 class CreatePlayerVC: GeneralViewController {
 
+    private var topView = UIView()
+    private var closeButton = UIButton()
+    
     private let scroll = UIScrollView()
     private let viewBack = UIView()
     private let nameAssistentLabel = UILabel()
     private let titlePrimery = UILabel()
     private let inputeNamePlayer = UITextField()
     private let startButton = UIButton()
+    
+    private var nc: UINavigationController!
+    
+    init(nc: UINavigationController?) {
+        super.init(nibName: nil, bundle: nil)
+        self.nc = nc
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +82,7 @@ class CreatePlayerVC: GeneralViewController {
     }
     
     private func startAction() {
+        
         DispatchQueue.main.async {
             let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -75,8 +90,10 @@ class CreatePlayerVC: GeneralViewController {
             LocalStorage.shared.startSession = dateString
             //
             self.view.endEditing(true)
-            let vc = SelectSceneVC()
-            self.navigationController?.pushViewController(vc, animated: true)
+            self.dismiss(animated: true) {
+                let vc = SelectSceneVC()
+                self.nc?.pushViewController(vc, animated: true)
+            }
         }
     }
 }
@@ -84,12 +101,43 @@ class CreatePlayerVC: GeneralViewController {
 extension CreatePlayerVC {
     
     private func createSubviews() {
+        createTopView()
+        createCloseButton()
+        
         createScroll()
         createViewBack()
         createNameAssistent()
         createTitle()
         createInputeNameplayer()
         createInputeStartButton()
+    }
+    
+    private func createTopView() {
+        view.addSubview(topView)
+        topView.backgroundColor = gold
+        //
+        topView.translatesAutoresizingMaskIntoConstraints = false
+        topView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        topView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        topView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+    }
+    
+    private func createCloseButton() {
+        topView.addSubview(closeButton)
+        closeButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        closeButton.setTitle("Закрыть", for: .normal)
+        closeButton.setTitleColor(.black, for: .normal)
+        let action = UIAction { [weak self] _ in
+            self?.dismiss(animated: true)
+        }
+        closeButton.addAction(action, for: .touchUpInside)
+        //
+        closeButton.translatesAutoresizingMaskIntoConstraints = false
+        closeButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        closeButton.leftAnchor.constraint(equalTo: topView.leftAnchor).isActive = true
+        closeButton.bottomAnchor.constraint(equalTo: topView.bottomAnchor).isActive = true
+        closeButton.widthAnchor.constraint(equalToConstant: 90).isActive = true
+        closeButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
     private func createScroll() {
@@ -99,7 +147,7 @@ extension CreatePlayerVC {
         scroll.backgroundColor = .clear
         //
         scroll.translatesAutoresizingMaskIntoConstraints = false
-        scroll.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        scroll.topAnchor.constraint(equalTo: topView.bottomAnchor).isActive = true
         scroll.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         scroll.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         scroll.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true

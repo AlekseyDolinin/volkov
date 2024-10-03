@@ -2,8 +2,8 @@ import UIKit
 
 class GeneralViewController: UIViewController {
         
-    private let backButton = UIButton(type: .custom)
-    private let infoButton = UIButton(type: .custom)
+    let backButton = UIButton(type: .custom)
+    let infoButton = UIButton(type: .custom)
         
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
