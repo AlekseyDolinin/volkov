@@ -40,6 +40,7 @@
 		10472B302CAC854B00B5CB2E /* SelectSceneVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10472B2F2CAC854B00B5CB2E /* SelectSceneVM.swift */; };
 		10472B322CAC87E400B5CB2E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10472B312CAC87E400B5CB2E /* Category.swift */; };
 		10472B342CAC87F800B5CB2E /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10472B332CAC87F800B5CB2E /* Tag.swift */; };
+		91FB041F2CB01681000A5BEE /* Performance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FB041E2CB01681000A5BEE /* Performance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +79,7 @@
 		10472B2F2CAC854B00B5CB2E /* SelectSceneVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectSceneVM.swift; sourceTree = "<group>"; };
 		10472B312CAC87E400B5CB2E /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		10472B332CAC87F800B5CB2E /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
+		91FB041E2CB01681000A5BEE /* Performance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Performance.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +218,7 @@
 				10472B2D2CAC680B00B5CB2E /* Scene.swift */,
 				10472B312CAC87E400B5CB2E /* Category.swift */,
 				10472B332CAC87F800B5CB2E /* Tag.swift */,
+				91FB041E2CB01681000A5BEE /* Performance.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				103040BB2CA88768009C5A38 /* SelectSceneVC.swift in Sources */,
 				10472B2E2CAC680B00B5CB2E /* Scene.swift in Sources */,
 				1030407A2CA681C8009C5A38 /* SceneDelegate.swift in Sources */,
+				91FB041F2CB01681000A5BEE /* Performance.swift in Sources */,
 				103040C42CA894F4009C5A38 /* UITable.swift in Sources */,
 				103040D62CA8A446009C5A38 /* SelectTagCell.swift in Sources */,
 				103041152CAA0431009C5A38 /* Loader.swift in Sources */,

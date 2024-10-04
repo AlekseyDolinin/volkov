@@ -14,7 +14,7 @@ class LocalStorage: NSObject {
         }
     }
     
-    var idSession: String? {
+    var idSession: Int? {
         didSet {
             UserDefaults.standard.setValue(idSession, forKey: "idSession")
         }
@@ -44,7 +44,7 @@ class LocalStorage: NSObject {
         }
     }
     
-    var savedIDsTags: [Int]? {
+    var savedIDsTags: [Int] = [] {
         didSet {
             UserDefaults.standard.setValue(savedIDsTags, forKey: "selectedIDsTags")
         }
@@ -57,11 +57,11 @@ class LocalStorage: NSObject {
         dictionary.keys.forEach { key in
             defaults.removeObject(forKey: key)
         }
+        savedIDsTags.removeAll()
         namePlayer = nil
         idSelectAssistent = nil
         startSession = nil
         finishSession = nil
-        savedIDsTags = nil
         idSession = nil
     }
     

@@ -11,9 +11,9 @@ final class SelectTagCell: UITableViewCell {
     
     private let backView = UIView()
     private let name = UILabel()
-//    private let selectIcon = UIImageView()
     private let markSignificant = UIImageView()
     
+    var selectTagsIDThisCategory = [Int]()
     var tag_: Tag! {
         didSet { setCell() }
     }
@@ -32,21 +32,15 @@ final class SelectTagCell: UITableViewCell {
     private func setCell() {
         name.text = tag_.name
         setMarkSignificant()
-        //
-        if tag_.isSelect {
-            backView.backgroundColor = .white.withAlphaComponent(0.3)
-//            selectIcon.isHidden = false
-        } else {
+        setSelectTag()
+    }
+    
+    private func setSelectTag() {
+        if !selectTagsIDThisCategory.contains(tag_.id) {
             backView.backgroundColor = .white.withAlphaComponent(0.1)
-//            selectIcon.isHidden = true
+        } else {
+            backView.backgroundColor = .white.withAlphaComponent(0.3)
         }
-        //
-//        let iconName = typeSelectMark == .multi ? "checkmark.square.fill" : "circlebadge.fill"
-//        let configuration = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular)
-//        checkIcon.image = UIImage(systemName: iconName, withConfiguration: configuration)
-
-//        let configuration = UIImage.SymbolConfiguration(pointSize: 24, weight: .regular)
-//        selectIcon.image = UIImage(systemName: "circlebadge.fill", withConfiguration: configuration)
     }
     
     private func setMarkSignificant() {
@@ -60,7 +54,6 @@ extension SelectTagCell {
     private func createSubviews() {
         createBackView()
         createName()
-        createCheckIcon()
         createMarkSignificant()
     }
 
@@ -90,18 +83,6 @@ extension SelectTagCell {
         name.leftAnchor.constraint(equalTo: backView.leftAnchor, constant: 16).isActive = true
         name.rightAnchor.constraint(equalTo: backView.rightAnchor, constant: -24).isActive = true
         name.heightAnchor.constraint(equalToConstant: 80).isActive = true
-    }
-    
-    private func createCheckIcon() {
-//        backView.addSubview(selectIcon)
-//        selectIcon.tintColor = .white
-//        selectIcon.contentMode = .center
-//        //
-//        selectIcon.translatesAutoresizingMaskIntoConstraints = false
-//        selectIcon.rightAnchor.constraint(equalTo: backView.rightAnchor, constant: -4).isActive = true
-//        selectIcon.topAnchor.constraint(equalTo: backView.topAnchor, constant: 4).isActive = true
-//        selectIcon.widthAnchor.constraint(equalToConstant: 24).isActive = true
-//        selectIcon.heightAnchor.constraint(equalToConstant: 24).isActive = true
     }
     
     private func createMarkSignificant() {

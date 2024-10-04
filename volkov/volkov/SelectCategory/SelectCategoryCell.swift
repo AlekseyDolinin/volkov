@@ -33,7 +33,7 @@ final class SelectCategoryCell: UITableViewCell {
         
         let savedTags = LocalStorage.shared.savedIDsTags
         let sceneIDsTags = category.tags.map({ $0.id })
-        let setSavedTags: Set<Int> = Set(savedTags ?? [])
+        let setSavedTags: Set<Int> = Set(savedTags)
         let setSceneIDsTags: Set<Int> = Set(sceneIDsTags)
         let intersection = setSavedTags.intersection(setSceneIDsTags)
         markSignificant.isHidden = intersection.isEmpty

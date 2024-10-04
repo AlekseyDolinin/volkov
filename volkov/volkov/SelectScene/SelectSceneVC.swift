@@ -57,7 +57,7 @@ class SelectSceneVC: GeneralViewController {
                 sceneTags += i.tags
             }
             let sceneIDsTags = sceneTags.map({ $0.id })
-            let setSavedTags: Set<Int> = Set(savedTags ?? [])
+            let setSavedTags: Set<Int> = Set(savedTags)
             let setSceneIDsTags: Set<Int> = Set(sceneIDsTags)
             let intersection = setSavedTags.intersection(setSceneIDsTags)
 
@@ -90,8 +90,8 @@ class SelectSceneVC: GeneralViewController {
         }
     }
     
-    private func showAlertTagsSended() {
-        print("showAlertTagsSended")
+    private func showListPerformance() {
+        print("showListPerformance succed")
     }
     
     private func showAlertSendAllTags() {
@@ -127,9 +127,15 @@ extension SelectSceneVC: SelectSceneVMDelegate {
         }
     }
     
-    func tagsSended() {
+    func tagsSendedSucces() {
         DispatchQueue.main.async {
-            self.showAlertTagsSended()
+            self.showLoader()
+        }
+    }
+    
+    func showFilteredPerformance() {
+        DispatchQueue.main.async {
+            self.showListPerformance()
         }
     }
 }

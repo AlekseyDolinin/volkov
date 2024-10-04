@@ -12,6 +12,8 @@ class SelectTagVC: GeneralViewController {
     private var selectScene: Scene!
     private var selectCategory: Category!
     
+    private var selectTagsIDThisCategory = [Int]()
+    
     init(selectScene: Scene, selectCategory: Category) {
         super.init(nibName: nil, bundle: nil)
         self.selectScene = selectScene
@@ -19,6 +21,10 @@ class SelectTagVC: GeneralViewController {
         header.selectScene = selectScene
         header.selectCategory = selectCategory
         header.setView()
+        
+        let tagsIDThisCategory: Set<Int> = Set(selectCategory.tags.map({ $0.id }))
+        let savedIDsTags: Set<Int> = Set(LocalStorage.shared.savedIDsTags)
+        selectTagsIDThisCategory = Array(tagsIDThisCategory.intersection(savedIDsTags))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -32,19 +38,18 @@ class SelectTagVC: GeneralViewController {
     }
     
     private func checkSelectTagForShowButtonSave() {
-        let selected = selectCategory.tags.map({ $0.isSelect })
-        if selected.contains(true) {
-            saveTagButton.alpha = 1
-            saveTagButton.isEnabled = true
-        } else {
+        if selectTagsIDThisCategory.isEmpty {
             saveTagButton.alpha = 0.2
             saveTagButton.isEnabled = false
+        } else {
+            saveTagButton.alpha = 1
+            saveTagButton.isEnabled = true
         }
     }
     
     private func selectTag(indexPath: IndexPath) {
         if let maxSelect = LocalStorage.shared.categoryMultiSelect[selectCategory.code] {
-            setMulti(indexPath: indexPath, maxSelect: maxSelect)
+            setMulti(indexPath: indexPath, maxCount: maxSelect)
         } else {
             setSingle(indexPath: indexPath)
         }
@@ -52,34 +57,57 @@ class SelectTagVC: GeneralViewController {
     }
     
     private func setSingle(indexPath: IndexPath) {
-        _ = selectCategory.tags.map({ $0.isSelect = false })
+        selectTagsIDThisCategory.removeAll()
+        selectTagsIDThisCategory.append(selectCategory.tags[indexPath.row].id)
         table.reloadData()
-        selectCategory.tags[indexPath.row].isSelect = true
-        table.reloadRows(at: [indexPath], with: .none)
     }
     
-    private func setMulti(indexPath: IndexPath, maxSelect: Int) {
-        guard let maxCount = LocalStorage.shared.categoryMultiSelect[selectCategory.code] else { return }
-        let selectedTags = selectCategory.tags.filter({ $0.isSelect == true })
-        if selectedTags.count < maxCount {
-            selectCategory.tags[indexPath.row].isSelect.toggle()
-        } else {
-            if selectCategory.tags[indexPath.row].isSelect == false {
-                return
-            } else {
-                selectCategory.tags[indexPath.row].isSelect = false
-            }
+    private func setMulti(indexPath: IndexPath, maxCount: Int) {
+        print("maxCount: \(maxCount)")
+        
+        // если ничего ещё не выбрали
+        if selectTagsIDThisCategory.isEmpty {
+            selectTagsIDThisCategory.append(selectCategory.tags[indexPath.row].id)
+            table.reloadRows(at: [indexPath], with: .none)
+            return
         }
-        table.reloadRows(at: [indexPath], with: .none)
-        //
+        
+        // если уже что-то выбрали и нажали на уже выбраный тэг - удаление тэга из списка выбраных
+        if !selectTagsIDThisCategory.isEmpty && selectTagsIDThisCategory.contains(selectCategory.tags[indexPath.row].id) {
+            print("нажали на уже выбраный тэг")
+            guard let index = selectTagsIDThisCategory.firstIndex(of: selectCategory.tags[indexPath.row].id) else { return }
+            selectTagsIDThisCategory.remove(at: index)
+            table.reloadRows(at: [indexPath], with: .none)
+            return
+        }
+        
+        // если уже что-то выбрали и нажали на не выбраный тэг
+        if !selectTagsIDThisCategory.isEmpty && !selectTagsIDThisCategory.contains(selectCategory.tags[indexPath.row].id) {
+            // проверка лимита на количество тэгов
+            if selectTagsIDThisCategory.count == maxCount { return }
+            print("нажали на не выбраный тэг")
+            selectTagsIDThisCategory.append(selectCategory.tags[indexPath.row].id)
+            table.reloadRows(at: [indexPath], with: .none)
+            return
+        }
     }
         
     private func saveTags() {
-        let selectedTags = selectCategory.tags.filter({ $0.isSelect == true })
-        let selectedIDsTags = selectedTags.map({ $0.id })
-        //
-        let arrayLaterSavedTags: [Int] = LocalStorage.shared.savedIDsTags ?? []
-        LocalStorage.shared.savedIDsTags = arrayLaterSavedTags + selectedIDsTags
+        removeAllTagsThisCategory()
+        saveNewTags()
+    }
+    
+    // удаление из сохраненных меток всех меток этой категории
+    private func removeAllTagsThisCategory() {
+        // удаление из сохраненных меток всех меток этой категории
+        for i in selectCategory.tags.map({ $0.id }) {
+            LocalStorage.shared.savedIDsTags = LocalStorage.shared.savedIDsTags.filter({ $0 != i })
+        }
+    }
+    
+    // запись новых меток
+    private func saveNewTags() {
+        LocalStorage.shared.savedIDsTags += selectTagsIDThisCategory
         dismiss(animated: true)
     }
 }
@@ -92,10 +120,12 @@ extension SelectTagVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SelectTagCell.identifier,
-                                                       for: indexPath) as? SelectTagCell else {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: SelectTagCell.identifier,
+            for: indexPath) as? SelectTagCell else {
             fatalError("Unable deque cell...")
         }
+        cell.selectTagsIDThisCategory = selectTagsIDThisCategory
         cell.tag_ = selectCategory.tags[indexPath.row]
         return cell
     }
