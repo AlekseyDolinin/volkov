@@ -14,6 +14,12 @@ class LocalStorage: NSObject {
         }
     }
     
+    var idSession: String? {
+        didSet {
+            UserDefaults.standard.setValue(idSession, forKey: "idSession")
+        }
+    }
+    
     var namePlayer: String? {
         didSet {
             UserDefaults.standard.setValue(namePlayer, forKey: "namePlayer")
@@ -56,8 +62,8 @@ class LocalStorage: NSObject {
         startSession = nil
         finishSession = nil
         savedIDsTags = nil
+        idSession = nil
     }
-    
     
     let categoryMultiSelect = ["choose_genre": 4, "voice_of_the_people": 7, "hero_values": 3, "pains_of_a_hero": 3]
 }

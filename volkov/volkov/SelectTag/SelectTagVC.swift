@@ -59,8 +59,19 @@ class SelectTagVC: GeneralViewController {
     }
     
     private func setMulti(indexPath: IndexPath, maxSelect: Int) {
-        selectCategory.tags[indexPath.row].isSelect.toggle()
+        guard let maxCount = LocalStorage.shared.categoryMultiSelect[selectCategory.code] else { return }
+        let selectedTags = selectCategory.tags.filter({ $0.isSelect == true })
+        if selectedTags.count < maxCount {
+            selectCategory.tags[indexPath.row].isSelect.toggle()
+        } else {
+            if selectCategory.tags[indexPath.row].isSelect == false {
+                return
+            } else {
+                selectCategory.tags[indexPath.row].isSelect = false
+            }
+        }
         table.reloadRows(at: [indexPath], with: .none)
+        //
     }
         
     private func saveTags() {
