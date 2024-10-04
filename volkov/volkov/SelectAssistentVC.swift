@@ -69,6 +69,15 @@ class SelectAssistentVC: GeneralViewController {
         // idSession
         let idSession = UserDefaults.standard.integer(forKey: "idSession")
         LocalStorage.shared.idSession = idSession
+        
+        // start sesion Date
+        let startSessionDate = UserDefaults.standard.string(forKey: "startSession")
+        print("startSessionDate: \(startSessionDate)")
+        LocalStorage.shared.startSessionString = startSessionDate
+        
+        // finish sesion Date
+        let finishSessionString = UserDefaults.standard.string(forKey: "finishSession")
+        LocalStorage.shared.finishSessionString = finishSessionString
     }
     
     private func parseAssistents() {

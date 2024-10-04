@@ -10,10 +10,7 @@ class ListPerformanceVC: GeneralViewController {
     init(performances: [Performance]) {
         super.init(nibName: nil, bundle: nil)
         self.performances = performances
-        
-        let performance = Performance()
-        performance.name = "234567890"
-        self.performances.append(performance)
+        print("performances1: \(performances)")
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -36,15 +33,12 @@ class ListPerformanceVC: GeneralViewController {
 
 extension ListPerformanceVC: UITableViewDelegate, UITableViewDataSource {
 
-    func tableView(
-        _ tableView: UITableView,
-        numberOfRowsInSection section: Int
-    ) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return performances.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: PerformanceCell.identifier,
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PerformanceCell.identifier, 
                                                        for: indexPath) as? PerformanceCell else {
             fatalError("Unable deque cell...")
         }

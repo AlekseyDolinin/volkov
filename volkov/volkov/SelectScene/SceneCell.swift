@@ -33,8 +33,6 @@ final class SceneCell: UITableViewCell {
     }
     
     private func setMarkSignificant() {
-//        markSignificant.isHidden = !scene.isSignificant
-        
         let savedTags = LocalStorage.shared.savedIDsTags
         var sceneTags: [Tag] = []
         let sceneСategories = scene.categories
@@ -105,7 +103,7 @@ extension SceneCell {
         markSignificant.image = UIImage(systemName: "bookmark.fill", withConfiguration: configuration)
         //
         markSignificant.translatesAutoresizingMaskIntoConstraints = false
-        markSignificant.rightAnchor.constraint(equalTo: backView.rightAnchor, constant: -4).isActive = true
+        markSignificant.leftAnchor.constraint(equalTo: backView.leftAnchor, constant: 4).isActive = true
         markSignificant.topAnchor.constraint(equalTo: backView.topAnchor, constant: -4).isActive = true
         markSignificant.widthAnchor.constraint(equalToConstant: 24).isActive = true
         markSignificant.heightAnchor.constraint(equalToConstant: 24).isActive = true

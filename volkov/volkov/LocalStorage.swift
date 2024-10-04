@@ -14,6 +14,44 @@ class LocalStorage: NSObject {
         }
     }
     
+    var startSessionString: String?
+    var finishSessionString: String?
+    
+    var startSessionDate: Date? {
+        didSet {
+            print("didSet startSessionDate: \(startSessionDate)")
+            if startSessionDate == nil {
+                startSessionString = nil
+                return
+            }
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let dateString = formatter.string(from: startSessionDate ?? Date())
+            print("dateString: \(dateString)")
+            startSessionString = dateString
+            UserDefaults.standard.setValue(dateString, forKey: "startSession")
+        }
+    }
+    
+    var finishSessionDate: Date? {
+        didSet {
+            if finishSessionDate == nil {
+                finishSessionString = nil
+                return
+            }
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let dateString = formatter.string(from: finishSessionDate ?? Date())
+            finishSessionString = dateString
+            UserDefaults.standard.setValue(dateString, forKey: "finishSession")
+        }
+    }
+    
+    
+    
+    
+    
+    
     var idSession: Int? {
         didSet {
             UserDefaults.standard.setValue(idSession, forKey: "idSession")
@@ -29,18 +67,6 @@ class LocalStorage: NSObject {
     var idSelectAssistent: Int? {
         didSet {
             UserDefaults.standard.setValue(idSelectAssistent, forKey: "idSelectAssistent")
-        }
-    }
-    
-    var startSession: String? {
-        didSet {
-            UserDefaults.standard.setValue(startSession, forKey: "startSession")
-        }
-    }
-    
-    var finishSession: String? {
-        didSet {
-            UserDefaults.standard.setValue(finishSession, forKey: "finishSession")
         }
     }
     
@@ -60,8 +86,11 @@ class LocalStorage: NSObject {
         savedIDsTags.removeAll()
         namePlayer = nil
         idSelectAssistent = nil
-        startSession = nil
-        finishSession = nil
+        startSessionDate = nil
+        finishSessionDate = nil
+        startSessionDate = nil
+        finishSessionDate = nil
+        
         idSession = nil
     }
     

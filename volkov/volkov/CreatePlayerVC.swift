@@ -82,13 +82,8 @@ class CreatePlayerVC: GeneralViewController {
     }
     
     private func startAction() {
-        
+        LocalStorage.shared.startSessionDate = Date()
         DispatchQueue.main.async {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            let dateString = formatter.string(from: Date())
-            LocalStorage.shared.startSession = dateString
-            //
             self.view.endEditing(true)
             self.dismiss(animated: true) {
                 let vc = SelectSceneVC()

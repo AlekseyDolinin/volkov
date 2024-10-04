@@ -89,15 +89,6 @@ class SelectSceneVC: GeneralViewController {
         }
     }
     
-    private func showListPerformance() {
-        print("showListPerformance")
-        DispatchQueue.main.async {
-            self.hideLoader()
-            let vc = ListPerformanceVC(performances: self.vm.performances)
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-    }
-    
     private func showAlertSendAllTags() {
         let title = "Отправить все выбраные метки?"
         let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
@@ -113,11 +104,7 @@ class SelectSceneVC: GeneralViewController {
     }
     
     private func sendTags() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let dateString = formatter.string(from: Date())
-        LocalStorage.shared.finishSession = dateString
-        //
+        LocalStorage.shared.finishSessionDate = Date()
         vm.sendAllTags()
     }
 }
@@ -139,7 +126,10 @@ extension SelectSceneVC: SelectSceneVMDelegate {
     
     func showFilteredPerformance() {
         DispatchQueue.main.async {
-            self.showListPerformance()
+            print("showListPerformance")
+            self.hideLoader()
+            let vc = ListPerformanceVC(performances: self.vm.performances)
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }
