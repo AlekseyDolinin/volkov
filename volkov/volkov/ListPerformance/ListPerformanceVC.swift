@@ -1,16 +1,19 @@
 import UIKit
 
-class SelectCategoryVC: GeneralViewController {
-
+class ListPerformanceVC: GeneralViewController {
+    
     private var table = UITableView()
-    private var header = HeaderSelectCategory()
+    private var header = HeaderListPerformance()
     
-    var selectScene: Scene!
-    
-    init(selectScene: Scene) {
+    private var performances = [Performance]()
+        
+    init(performances: [Performance]) {
         super.init(nibName: nil, bundle: nil)
-        self.selectScene = selectScene
-        header.selectScene = selectScene
+        self.performances = performances
+        
+        let performance = Performance()
+        performance.name = "234567890"
+        self.performances.append(performance)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -21,6 +24,7 @@ class SelectCategoryVC: GeneralViewController {
         super.viewDidLoad()
         createSubviews()
         header.layoutIfNeeded()
+        infoButton.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -30,35 +34,34 @@ class SelectCategoryVC: GeneralViewController {
 }
 
 
-extension SelectCategoryVC: UITableViewDelegate, UITableViewDataSource {
+extension ListPerformanceVC: UITableViewDelegate, UITableViewDataSource {
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return selectScene.categories.count
+    func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
+        return performances.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SelectCategoryCell.identifier, 
-                                                       for: indexPath) as? SelectCategoryCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: PerformanceCell.identifier,
+                                                       for: indexPath) as? PerformanceCell else {
             fatalError("Unable deque cell...")
         }
-        cell.category = selectScene.categories[indexPath.row]
+        cell.performance = performances[indexPath.row]
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         DispatchQueue.main.async {
-            let vc = SelectTagVC(
-                selectScene: self.selectScene,
-                selectCategory: self.selectScene.categories[indexPath.row]
-            )
-            vc.modalPresentationStyle = .fullScreen
+            let vc = PerformanceDetailVC(performance: self.performances[indexPath.row])
             self.present(vc, animated: true)
         }
     }
 }
 
 
-extension SelectCategoryVC {
+extension ListPerformanceVC {
     
     private func createSubviews() {
         createTable()
@@ -72,7 +75,7 @@ extension SelectCategoryVC {
         table.showsVerticalScrollIndicator = false
         table.delegate = self
         table.dataSource = self
-        table.register(SelectCategoryCell.self, forCellReuseIdentifier: SelectCategoryCell.identifier)
+        table.register(PerformanceCell.self, forCellReuseIdentifier: PerformanceCell.identifier)
         table.tableHeaderView = header
         table.createClearFooter()
         //

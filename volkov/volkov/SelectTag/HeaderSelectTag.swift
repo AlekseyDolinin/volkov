@@ -37,7 +37,7 @@ extension HeaderSelectTag {
     
     private func createTitle() {
         addSubview(titlePrimery)
-        titlePrimery.font = UIFont.systemFont(ofSize: 32, weight: .regular)
+        titlePrimery.font = UIFont.systemFont(ofSize: 24, weight: .medium)
         titlePrimery.textColor = .white
         titlePrimery.lineBreakMode = .byWordWrapping
         titlePrimery.numberOfLines = 0

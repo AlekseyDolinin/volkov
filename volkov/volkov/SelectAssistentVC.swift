@@ -21,8 +21,6 @@ class SelectAssistentVC: GeneralViewController {
         // есть незаконченая сессия
         let idSelectAssistent = UserDefaults.standard.string(forKey: "idSelectAssistent")
         let namePlayer = UserDefaults.standard.string(forKey: "namePlayer")
-        print("idSelectAssistent: \(idSelectAssistent)")
-        print("namePlayer: \(namePlayer)")
         if idSelectAssistent != nil && namePlayer != nil {
             print("есть незаконченая сессия")
             showDontCompletedSession()
@@ -67,6 +65,10 @@ class SelectAssistentVC: GeneralViewController {
         // idSelectAssistent
         let idSelectAssistent = UserDefaults.standard.integer(forKey: "idSelectAssistent")
         LocalStorage.shared.idSelectAssistent = idSelectAssistent
+        
+        // idSession
+        let idSession = UserDefaults.standard.integer(forKey: "idSession")
+        LocalStorage.shared.idSession = idSession
     }
     
     private func parseAssistents() {

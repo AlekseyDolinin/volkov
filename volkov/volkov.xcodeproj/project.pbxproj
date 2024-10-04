@@ -24,9 +24,6 @@
 		103040BF2CA88825009C5A38 /* HeaderSelectScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103040BE2CA88825009C5A38 /* HeaderSelectScene.swift */; };
 		103040C12CA88C1D009C5A38 /* SceneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103040C02CA88C1D009C5A38 /* SceneCell.swift */; };
 		103040C42CA894F4009C5A38 /* UITable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103040C32CA894F4009C5A38 /* UITable.swift */; };
-		103040C62CA899FB009C5A38 /* FilteredPerformanceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103040C52CA899FA009C5A38 /* FilteredPerformanceVC.swift */; };
-		103040C82CA89A35009C5A38 /* HeaderFilteredPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103040C72CA89A35009C5A38 /* HeaderFilteredPerformance.swift */; };
-		103040CB2CA89DC3009C5A38 /* PerformanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103040CA2CA89DC3009C5A38 /* PerformanceCell.swift */; };
 		103040CD2CA8A2C2009C5A38 /* SelectCategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103040CC2CA8A2C2009C5A38 /* SelectCategoryVC.swift */; };
 		103040CF2CA8A2FB009C5A38 /* HeaderSelectCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103040CE2CA8A2FB009C5A38 /* HeaderSelectCategory.swift */; };
 		103040D12CA8A36B009C5A38 /* SelectCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103040D02CA8A36A009C5A38 /* SelectCategoryCell.swift */; };
@@ -43,6 +40,8 @@
 		91FB041F2CB01681000A5BEE /* Performance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FB041E2CB01681000A5BEE /* Performance.swift */; };
 		91FB04212CB0172B000A5BEE /* ListPerformanceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FB04202CB0172B000A5BEE /* ListPerformanceVC.swift */; };
 		91FB04232CB0175D000A5BEE /* HeaderListPerformance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FB04222CB0175D000A5BEE /* HeaderListPerformance.swift */; };
+		91FB04262CB01B93000A5BEE /* PerformanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FB04252CB01B92000A5BEE /* PerformanceCell.swift */; };
+		91FB04282CB01C5C000A5BEE /* PerformanceDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FB04272CB01C5C000A5BEE /* PerformanceDetailVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,9 +64,6 @@
 		103040BE2CA88825009C5A38 /* HeaderSelectScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSelectScene.swift; sourceTree = "<group>"; };
 		103040C02CA88C1D009C5A38 /* SceneCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCell.swift; sourceTree = "<group>"; };
 		103040C32CA894F4009C5A38 /* UITable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITable.swift; sourceTree = "<group>"; };
-		103040C52CA899FA009C5A38 /* FilteredPerformanceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteredPerformanceVC.swift; sourceTree = "<group>"; };
-		103040C72CA89A35009C5A38 /* HeaderFilteredPerformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderFilteredPerformance.swift; sourceTree = "<group>"; };
-		103040CA2CA89DC3009C5A38 /* PerformanceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceCell.swift; sourceTree = "<group>"; };
 		103040CC2CA8A2C2009C5A38 /* SelectCategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoryVC.swift; sourceTree = "<group>"; };
 		103040CE2CA8A2FB009C5A38 /* HeaderSelectCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSelectCategory.swift; sourceTree = "<group>"; };
 		103040D02CA8A36A009C5A38 /* SelectCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectCategoryCell.swift; sourceTree = "<group>"; };
@@ -84,6 +80,8 @@
 		91FB041E2CB01681000A5BEE /* Performance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Performance.swift; sourceTree = "<group>"; };
 		91FB04202CB0172B000A5BEE /* ListPerformanceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPerformanceVC.swift; sourceTree = "<group>"; };
 		91FB04222CB0175D000A5BEE /* HeaderListPerformance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderListPerformance.swift; sourceTree = "<group>"; };
+		91FB04252CB01B92000A5BEE /* PerformanceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceCell.swift; sourceTree = "<group>"; };
+		91FB04272CB01C5C000A5BEE /* PerformanceDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceDetailVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,11 +120,10 @@
 				1030408B2CA682AC009C5A38 /* SelectAssistentVC.swift */,
 				1030409D2CA71BCF009C5A38 /* CreatePlayerVC.swift */,
 				103040C22CA88E37009C5A38 /* SelectScene */,
-				91FB04202CB0172B000A5BEE /* ListPerformanceVC.swift */,
-				91FB04222CB0175D000A5BEE /* HeaderListPerformance.swift */,
 				103040D22CA8A370009C5A38 /* SelectCategory */,
+				91FB04242CB01A74000A5BEE /* ListPerformance */,
+				91FB04272CB01C5C000A5BEE /* PerformanceDetailVC.swift */,
 				103040D92CA8A469009C5A38 /* SelectTag */,
-				103040C92CA89A3D009C5A38 /* FilteredPerformance */,
 				103040BC2CA887B6009C5A38 /* LocalStorage.swift */,
 				1030409A2CA71866009C5A38 /* Extentions */,
 				103040992CA71830009C5A38 /* Helpers */,
@@ -187,16 +184,6 @@
 			path = SelectScene;
 			sourceTree = "<group>";
 		};
-		103040C92CA89A3D009C5A38 /* FilteredPerformance */ = {
-			isa = PBXGroup;
-			children = (
-				103040C52CA899FA009C5A38 /* FilteredPerformanceVC.swift */,
-				103040C72CA89A35009C5A38 /* HeaderFilteredPerformance.swift */,
-				103040CA2CA89DC3009C5A38 /* PerformanceCell.swift */,
-			);
-			path = FilteredPerformance;
-			sourceTree = "<group>";
-		};
 		103040D22CA8A370009C5A38 /* SelectCategory */ = {
 			isa = PBXGroup;
 			children = (
@@ -227,6 +214,16 @@
 				91FB041E2CB01681000A5BEE /* Performance.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		91FB04242CB01A74000A5BEE /* ListPerformance */ = {
+			isa = PBXGroup;
+			children = (
+				91FB04202CB0172B000A5BEE /* ListPerformanceVC.swift */,
+				91FB04222CB0175D000A5BEE /* HeaderListPerformance.swift */,
+				91FB04252CB01B92000A5BEE /* PerformanceCell.swift */,
+			);
+			path = ListPerformance;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -314,23 +311,22 @@
 				1030409C2CA7187B009C5A38 /* UIColor.swift in Sources */,
 				1030409E2CA71BCF009C5A38 /* CreatePlayerVC.swift in Sources */,
 				103040D12CA8A36B009C5A38 /* SelectCategoryCell.swift in Sources */,
-				103040CB2CA89DC3009C5A38 /* PerformanceCell.swift in Sources */,
 				103040CF2CA8A2FB009C5A38 /* HeaderSelectCategory.swift in Sources */,
 				103040BF2CA88825009C5A38 /* HeaderSelectScene.swift in Sources */,
 				103040782CA681C8009C5A38 /* AppDelegate.swift in Sources */,
-				103040C82CA89A35009C5A38 /* HeaderFilteredPerformance.swift in Sources */,
 				103040D42CA8A427009C5A38 /* SelectTagVC.swift in Sources */,
 				103040C12CA88C1D009C5A38 /* SceneCell.swift in Sources */,
 				103040902CA70F4B009C5A38 /* SwiftyJSON.swift in Sources */,
-				103040C62CA899FB009C5A38 /* FilteredPerformanceVC.swift in Sources */,
 				103040A02CA72E30009C5A38 /* GeneralViewController.swift in Sources */,
 				103040BB2CA88768009C5A38 /* SelectSceneVC.swift in Sources */,
 				10472B2E2CAC680B00B5CB2E /* Scene.swift in Sources */,
+				91FB04282CB01C5C000A5BEE /* PerformanceDetailVC.swift in Sources */,
 				1030407A2CA681C8009C5A38 /* SceneDelegate.swift in Sources */,
 				91FB041F2CB01681000A5BEE /* Performance.swift in Sources */,
 				91FB04232CB0175D000A5BEE /* HeaderListPerformance.swift in Sources */,
 				103040C42CA894F4009C5A38 /* UITable.swift in Sources */,
 				103040D62CA8A446009C5A38 /* SelectTagCell.swift in Sources */,
+				91FB04262CB01B93000A5BEE /* PerformanceCell.swift in Sources */,
 				103041152CAA0431009C5A38 /* Loader.swift in Sources */,
 				1030408E2CA70F05009C5A38 /* API.swift in Sources */,
 			);

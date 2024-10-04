@@ -31,14 +31,14 @@ extension HeaderSelectCategory {
     
     private func createTitle() {
         addSubview(titlePrimery)
-        titlePrimery.font = UIFont.systemFont(ofSize: 32, weight: .regular)
+        titlePrimery.font = UIFont.systemFont(ofSize: 24, weight: .medium)
         titlePrimery.textColor = .white
         titlePrimery.numberOfLines = 0
         titlePrimery.lineBreakMode = .byWordWrapping
         titlePrimery.textAlignment = .center
         //
         titlePrimery.translatesAutoresizingMaskIntoConstraints = false
-        titlePrimery.topAnchor.constraint(equalTo: topAnchor, constant: 16).isActive = true
+        titlePrimery.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
         titlePrimery.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16).isActive = true
         titlePrimery.leftAnchor.constraint(equalTo: leftAnchor, constant: 16).isActive = true
         titlePrimery.rightAnchor.constraint(equalTo: rightAnchor, constant: -16).isActive = true

@@ -103,7 +103,6 @@ extension CreatePlayerVC {
     private func createSubviews() {
         createTopView()
         createCloseButton()
-        
         createScroll()
         createViewBack()
         createNameAssistent()
@@ -185,7 +184,7 @@ extension CreatePlayerVC {
     
     private func createTitle() {
         viewBack.addSubview(titlePrimery)
-        titlePrimery.font = UIFont.systemFont(ofSize: 24, weight: .light)
+        titlePrimery.font = UIFont.systemFont(ofSize: 24, weight: .medium)
         titlePrimery.text = "Введите имя игрока"
         titlePrimery.textAlignment = .center
         titlePrimery.numberOfLines = 0

@@ -33,7 +33,6 @@ class SelectTagVC: GeneralViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         createSubviews()
     }
     

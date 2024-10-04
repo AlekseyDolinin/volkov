@@ -15,7 +15,6 @@ class SelectSceneVC: GeneralViewController {
         vm = SelectSceneVM()
         vm?.delegate = self
         vm?.parseData()
-        view.backgroundColor = .white
         createSubviews()
         header.layoutIfNeeded()
     }
@@ -91,7 +90,12 @@ class SelectSceneVC: GeneralViewController {
     }
     
     private func showListPerformance() {
-        print("showListPerformance succed")
+        print("showListPerformance")
+        DispatchQueue.main.async {
+            self.hideLoader()
+            let vc = ListPerformanceVC(performances: self.vm.performances)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     private func showAlertSendAllTags() {
@@ -169,7 +173,6 @@ extension SelectSceneVC {
     
     private func createSubviews() {
         createTable()
-        createBottomView()
         createBottomView()
         createSendAllTagsButton()
     }

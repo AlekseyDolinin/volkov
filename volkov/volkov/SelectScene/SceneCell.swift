@@ -42,7 +42,7 @@ final class SceneCell: UITableViewCell {
             sceneTags += i.tags
         }
         let sceneIDsTags = sceneTags.map({ $0.id })
-        let setSavedTags: Set<Int> = Set(savedTags ?? [])
+        let setSavedTags: Set<Int> = Set(savedTags)
         let setSceneIDsTags: Set<Int> = Set(sceneIDsTags)
         let intersection = setSavedTags.intersection(setSceneIDsTags)
         markSignificant.isHidden = intersection.isEmpty

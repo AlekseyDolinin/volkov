@@ -35,12 +35,15 @@ class SelectSceneVM {
 //            if let json = json {
 //                print(json)
                 self.delegate?.tagsSendedSucces()
-            LocalStorage.shared.idSession = 121212
+                let idSession = 0
+                print("idSession: \(idSession)")
+                LocalStorage.shared.idSession = idSession
+                checkFilteredPerformance(idSession: idSession)
 //            }
 //        }
     }
     
-    private func checkFilteredPerformance() {
+    private func checkFilteredPerformance(idSession: Int) {
         Task(priority: .userInitiated) {
             let link = "https://mirteatr.vovlekay.online/api/checkFilteredPerformance/"
             let parameters = setParameters()
@@ -55,6 +58,7 @@ class SelectSceneVM {
                     performances.append(performance)
                 }
             }
+            delegate?.showFilteredPerformance()
         }
     }
     
