@@ -58,6 +58,9 @@ class PerformanceDetailVC: GeneralViewController {
     
     private func addTags() {
         let tags = performance.notSelectedSabels.map({ $0.name })
+        stackTags.subviews.forEach { view in
+            view.removeFromSuperview()
+        }
         for i in tags {
             let label = UILabel()
             label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
@@ -80,6 +83,17 @@ class PerformanceDetailVC: GeneralViewController {
     }
     
     private func setIcons() {
+        
+        if performance.isInternational == false 
+            && performance.hasFiveYearTour == false
+            && performance.hasTVscreenVersion == false
+            && performance.hasTenYearRepertory == false
+            && performance.hasTenYearRepertory == false
+            && performance.hasReward == false {
+            separatorTwo.isHidden = true
+            titleTags.topAnchor.constraint(equalTo: separator.bottomAnchor, constant: 24).isActive = true
+        }
+        
         iconInternational.isHidden = !performance.isInternational
         desInternational.isHidden = !performance.isInternational
         iconFiveYearTour.isHidden = !performance.hasFiveYearTour
@@ -202,6 +216,8 @@ extension PerformanceDetailVC {
         name.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         name.textColor = .white
         name.text = performance.name
+        name.lineBreakMode = .byWordWrapping
+        name.numberOfLines = 0
         //
         name.translatesAutoresizingMaskIntoConstraints = false
         name.topAnchor.constraint(equalTo: poster.bottomAnchor, constant: 8).isActive = true
@@ -463,7 +479,7 @@ extension PerformanceDetailVC {
         separatorTwo.leftAnchor.constraint(equalTo: viewBack.leftAnchor, constant: 16).isActive = true
         separatorTwo.rightAnchor.constraint(equalTo: viewBack.rightAnchor, constant: -16).isActive = true
         separatorTwo.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        separatorTwo.topAnchor.constraint(equalTo: iconReward.bottomAnchor, constant: 24).isActive = true
+        separatorTwo.topAnchor.constraint(equalTo: stackIcon.bottomAnchor, constant: 24).isActive = true
     }
     
     private func createTitleTags() {
@@ -486,7 +502,7 @@ extension PerformanceDetailVC {
         stackTags.translatesAutoresizingMaskIntoConstraints = false
         stackTags.topAnchor.constraint(equalTo: titleTags.bottomAnchor, constant: 24).isActive = true
         stackTags.bottomAnchor.constraint(equalTo: viewBack.bottomAnchor, constant: -80).isActive = true
-        stackTags.leftAnchor.constraint(equalTo: viewBack.leftAnchor, constant: 24).isActive = true
+        stackTags.leftAnchor.constraint(equalTo: viewBack.leftAnchor, constant: 16).isActive = true
         stackTags.rightAnchor.constraint(equalTo: viewBack.rightAnchor, constant: -16).isActive = true
     }
 }

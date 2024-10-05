@@ -63,6 +63,7 @@ class SelectSceneVM {
         parameters["start_date"] = LocalStorage.shared.startSessionString
         parameters["finish_date"] = LocalStorage.shared.finishSessionString
         parameters["labels"] = removeDoublesFromArray(arrayInt: LocalStorage.shared.savedIDsTags)
+        print(LocalStorage.shared.savedIDsTags.sorted(by: { $0 < $1 }))
         return parameters
     }
     
