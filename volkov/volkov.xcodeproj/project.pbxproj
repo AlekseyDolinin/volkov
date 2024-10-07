@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1028BEF82CB44D0300C19276 /* ArchivariusVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1028BEF72CB44D0200C19276 /* ArchivariusVC.swift */; };
 		103040782CA681C8009C5A38 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103040772CA681C8009C5A38 /* AppDelegate.swift */; };
 		1030407A2CA681C8009C5A38 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103040792CA681C8009C5A38 /* SceneDelegate.swift */; };
 		1030407C2CA681C8009C5A38 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1030407B2CA681C8009C5A38 /* SplashVC.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1028BEF72CB44D0200C19276 /* ArchivariusVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivariusVC.swift; sourceTree = "<group>"; };
 		103040742CA681C8009C5A38 /* volkov.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = volkov.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		103040772CA681C8009C5A38 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		103040792CA681C8009C5A38 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				1030408B2CA682AC009C5A38 /* SelectAssistentVC.swift */,
 				1030409D2CA71BCF009C5A38 /* CreatePlayerVC.swift */,
 				103040C22CA88E37009C5A38 /* SelectScene */,
+				1028BEF72CB44D0200C19276 /* ArchivariusVC.swift */,
 				103040D22CA8A370009C5A38 /* SelectCategory */,
 				103040D92CA8A469009C5A38 /* SelectTag */,
 				91FB04242CB01A74000A5BEE /* ListPerformance */,
@@ -300,6 +303,7 @@
 				10472B2C2CAC677D00B5CB2E /* Assistant.swift in Sources */,
 				103041132CAA036C009C5A38 /* UIViewController.swift in Sources */,
 				103040BD2CA887B6009C5A38 /* LocalStorage.swift in Sources */,
+				1028BEF82CB44D0300C19276 /* ArchivariusVC.swift in Sources */,
 				1030407C2CA681C8009C5A38 /* SplashVC.swift in Sources */,
 				10472B342CAC87F800B5CB2E /* Tag.swift in Sources */,
 				1030408C2CA682AC009C5A38 /* SelectAssistentVC.swift in Sources */,

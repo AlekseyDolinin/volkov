@@ -65,8 +65,24 @@ class SelectSceneVC: GeneralViewController {
     }
     
     private func selectScene(index: Int) {
-        let countPartInSelectScene = vm.scenes[index].categories.count
-        countPartInSelectScene == 1 ? presentSelectTags(selectScene: vm.scenes[index]) : presentSelectPart(selectScene: vm.scenes[index])
+        if vm.scenes[index].categories.count == 1 {
+            presentSelectTags(selectScene: vm.scenes[index])
+        } else {
+            if vm.scenes[index].id == 5 {
+                print("open archivarius")
+                DispatchQueue.main.async {
+                    let vc = ArchivariusVC(selectScene: self.vm.scenes[index])
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true)
+                }
+            }
+            if vm.scenes[index].id == 6 {
+                print("open great")
+            }
+            if vm.scenes[index].id == 13 {
+                print("open twins")
+            }
+        }
     }
     
     private func presentSelectPart(selectScene: Scene) {
@@ -137,16 +153,14 @@ extension SelectSceneVC: SelectSceneVMDelegate {
 
 extension SelectSceneVC: UITableViewDelegate, UITableViewDataSource {
 
-    func tableView(
-        _ tableView: UITableView,
-        numberOfRowsInSection section: Int
-    ) -> Int {
+    func tableView(_ tableView: UITableView,numberOfRowsInSection section: Int) -> Int {
         return vm.scenes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SceneCell.identifier, 
-                                                       for: indexPath) as? SceneCell else {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: SceneCell.identifier,
+            for: indexPath) as? SceneCell else {
             fatalError("Unable deque cell...")
         }
         cell.scene = vm.scenes[indexPath.row]

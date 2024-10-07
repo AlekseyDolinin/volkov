@@ -4,14 +4,14 @@ class SelectTagVC: GeneralViewController {
     
     private var topView = UIView()
     private var closeButton = UIButton()
-    private var table = UITableView()
+    private let titlePrimery = UILabel()
+    private var collection: UICollectionView!
     private var header = HeaderSelectTag()
     private var bottomView = UIView()
     private let saveTagButton = UIButton()
     
     private var selectScene: Scene!
     private var selectCategory: Category!
-    
     private var selectTagsIDThisCategory = [Int]()
     
     init(selectScene: Scene, selectCategory: Category) {
@@ -58,7 +58,7 @@ class SelectTagVC: GeneralViewController {
     private func setSingle(indexPath: IndexPath) {
         selectTagsIDThisCategory.removeAll()
         selectTagsIDThisCategory.append(selectCategory.tags[indexPath.row].id)
-        table.reloadData()
+        collection.reloadData()
     }
     
     private func setMulti(indexPath: IndexPath, maxCount: Int) {
@@ -67,7 +67,7 @@ class SelectTagVC: GeneralViewController {
         // если ничего ещё не выбрали
         if selectTagsIDThisCategory.isEmpty {
             selectTagsIDThisCategory.append(selectCategory.tags[indexPath.row].id)
-            table.reloadRows(at: [indexPath], with: .none)
+            collection.reloadItems(at: [indexPath])
             return
         }
         
@@ -76,7 +76,7 @@ class SelectTagVC: GeneralViewController {
             print("нажали на уже выбраный тэг")
             guard let index = selectTagsIDThisCategory.firstIndex(of: selectCategory.tags[indexPath.row].id) else { return }
             selectTagsIDThisCategory.remove(at: index)
-            table.reloadRows(at: [indexPath], with: .none)
+            collection.reloadItems(at: [indexPath])
             return
         }
         
@@ -86,7 +86,7 @@ class SelectTagVC: GeneralViewController {
             if selectTagsIDThisCategory.count == maxCount { return }
             print("нажали на не выбраный тэг")
             selectTagsIDThisCategory.append(selectCategory.tags[indexPath.row].id)
-            table.reloadRows(at: [indexPath], with: .none)
+            collection.reloadItems(at: [indexPath])
             return
         }
     }
@@ -112,24 +112,33 @@ class SelectTagVC: GeneralViewController {
 }
 
 
-extension SelectTagVC: UITableViewDelegate, UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension SelectTagVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return selectCategory.tags.count
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(
-            withIdentifier: SelectTagCell.identifier,
-            for: indexPath) as? SelectTagCell else {
+
+    func collectionView(_ collectionView: UICollectionView, 
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: SelectTagCell.identifier,
+            for: indexPath
+        ) as? SelectTagCell  else {
             fatalError("Unable deque cell...")
         }
         cell.selectTagsIDThisCategory = selectTagsIDThisCategory
         cell.tag_ = selectCategory.tags[indexPath.row]
         return cell
+        
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, 
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: (collectionView.frame.width - 24) / 2, height: 100)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectTag(indexPath: indexPath)
     }
 }
@@ -140,9 +149,10 @@ extension SelectTagVC {
     private func createSubviews() {
         createTopView()
         createCloseButton()
+        createTitle()
         createBottomView()
         createSendMarkButton()
-        createTable()
+        createCollection()
     }
     
     private func createTopView() {
@@ -173,6 +183,22 @@ extension SelectTagVC {
         closeButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
+    private func createTitle() {
+        view.addSubview(titlePrimery)
+        titlePrimery.font = UIFont.systemFont(ofSize: 24, weight: .medium)
+        titlePrimery.textColor = .white
+        titlePrimery.lineBreakMode = .byWordWrapping
+        titlePrimery.numberOfLines = 0
+        titlePrimery.textAlignment = .center
+        titlePrimery.text = selectCategory.name
+        //
+        titlePrimery.translatesAutoresizingMaskIntoConstraints = false
+        titlePrimery.topAnchor.constraint(equalTo: topView.bottomAnchor).isActive = true
+        titlePrimery.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        titlePrimery.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        titlePrimery.heightAnchor.constraint(equalToConstant: 80).isActive = true
+    }
+        
     private func createBottomView() {
         view.addSubview(bottomView)
         bottomView.backgroundColor = .black
@@ -205,22 +231,29 @@ extension SelectTagVC {
         saveTagButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
     }
     
-    private func createTable() {
-        view.addSubview(table)
-        table.backgroundColor = .clear
-        table.separatorColor = .clear
-        table.keyboardDismissMode = .onDrag
-        table.showsVerticalScrollIndicator = false
-        table.delegate = self
-        table.dataSource = self
-        table.register(SelectTagCell.self, forCellReuseIdentifier: SelectTagCell.identifier)
-        table.tableHeaderView = header
-        table.createClearFooter()
+    private func createCollection() {
+        collection = UICollectionView(frame: .zero, collectionViewLayout: setLayoutCollection())
+        view.addSubview(collection)
+        collection.backgroundColor = .clear
+        collection.showsVerticalScrollIndicator = false
+        collection.alwaysBounceVertical = true
+        collection.delegate = self
+        collection.dataSource = self
+        collection.register(SelectTagCell.self, forCellWithReuseIdentifier: SelectTagCell.identifier)        
         //
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.topAnchor.constraint(equalTo: topView.bottomAnchor).isActive = true
-        table.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        table.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        table.bottomAnchor.constraint(equalTo: bottomView.topAnchor).isActive = true
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        collection.topAnchor.constraint(equalTo: titlePrimery.bottomAnchor).isActive = true
+        collection.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        collection.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        collection.bottomAnchor.constraint(equalTo: bottomView.topAnchor).isActive = true
+    }
+    
+    private func setLayoutCollection() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 8, bottom: 16, right: 8)
+        layout.minimumLineSpacing = 8.0
+        layout.minimumInteritemSpacing = 8.0
+        layout.scrollDirection = .vertical
+        return layout
     }
 }

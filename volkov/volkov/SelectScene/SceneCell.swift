@@ -47,6 +47,9 @@ final class SceneCell: UITableViewCell {
     }
     
     private func setMarkMultiCategory() {
+        print(scene.name)
+        print(scene.categories.count)
+        print("================")
         markMultiCategory.isHidden = scene.categories.count == 1
     }
     
