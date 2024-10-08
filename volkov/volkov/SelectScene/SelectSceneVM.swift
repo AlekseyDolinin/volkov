@@ -29,6 +29,7 @@ class SelectSceneVM {
             let parameters = setParameters()
             print("parameters: \(parameters)")
             let json = await API.shared._request(link, method: .post, parameters: parameters)
+            print(json)
             if let json = json {
                 self.delegate?.tagsSendedSucces()
                 let idSession = json["session_id"].intValue
@@ -43,6 +44,7 @@ class SelectSceneVM {
             let link = "https://mirteatr.vovlekay.online/api/session/\(idSession)/performances/"
             let json = await API.shared._request(link)
             if let json = json {
+                print(json)
                 performances.removeAll()
                 for i in json.arrayValue {
                     let performance = Performance()

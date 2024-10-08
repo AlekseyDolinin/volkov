@@ -5,7 +5,7 @@ enum TypeSelectTag {
     case multi
 }
 
-final class SelectTagCell: UITableViewCell {
+final class SelectTagCell: UICollectionViewCell {
     
     static let identifier = "SelectTagCellIdentifier"
     
@@ -18,15 +18,14 @@ final class SelectTagCell: UITableViewCell {
         didSet { setCell() }
     }
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         backgroundColor = .clear
-        selectionStyle = .none
         createSubviews()
     }
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     private func setCell() {
@@ -63,9 +62,9 @@ extension SelectTagCell {
         backView.clipsToBounds = true
         //
         backView.translatesAutoresizingMaskIntoConstraints = false
-        backView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8.0).isActive = true
-        backView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8.0).isActive = true
-        backView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8).isActive = true
+        backView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+        backView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+        backView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         backView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
     }
     
