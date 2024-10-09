@@ -85,6 +85,7 @@ class SelectAssistentVC: GeneralViewController {
             for i in json["assistants"].arrayValue {
                 let assistant = Assistant()
                 assistant.parse(json: i)
+                if LocalStorage.shared.assistents.map({$0.id}).contains(assistant.id) { return }
                 LocalStorage.shared.assistents.append(assistant)
             }
             createButtonsSelectAssistent()
@@ -92,6 +93,9 @@ class SelectAssistentVC: GeneralViewController {
     }
     
     private func createButtonsSelectAssistent() {
+        stack.subviews.forEach { v in
+            v.removeFromSuperview()
+        }
         for i in 0..<LocalStorage.shared.assistents.count {
             let button = UIButton()
             button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .regular)
