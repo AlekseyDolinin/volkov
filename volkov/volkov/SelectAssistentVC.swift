@@ -72,7 +72,6 @@ class SelectAssistentVC: GeneralViewController {
         
         // start sesion Date
         let startSessionDate = UserDefaults.standard.string(forKey: "startSession")
-        print("startSessionDate: \(startSessionDate)")
         LocalStorage.shared.startSessionString = startSessionDate
         
         // finish sesion Date
@@ -81,6 +80,7 @@ class SelectAssistentVC: GeneralViewController {
     }
     
     private func parseAssistents() {
+        print("parseAssistents")
         if let json = LocalStorage.shared.jsonData {
             for i in json["assistants"].arrayValue {
                 let assistant = Assistant()

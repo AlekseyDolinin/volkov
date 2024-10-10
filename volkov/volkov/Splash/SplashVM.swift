@@ -18,7 +18,6 @@ class SplashVM {
                 LocalStorage.shared.jsonData = getJSON("data") ?? JSON()
             }
             if let json = json {
-                delegate?.updateContent()
                 LocalStorage.shared.jsonData = json
                 delegate?.updateContent()
             }

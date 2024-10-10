@@ -44,7 +44,7 @@ class SelectSceneVM {
             let link = "https://mirteatr.vovlekay.online/api/session/\(idSession)/performances/"
             let json = await API.shared._request(link)
             if let json = json {
-                print(json)
+                print("performances: \(json)")
                 performances.removeAll()
                 for i in json.arrayValue {
                     let performance = Performance()

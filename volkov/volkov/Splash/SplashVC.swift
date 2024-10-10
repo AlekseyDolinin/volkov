@@ -36,7 +36,6 @@ class SplashVC: UIViewController {
             UINavigationBar.appearance().compactAppearance = navigationBarAppearance
             UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
             let nc = UINavigationController()
-
             nc.addChild(SelectAssistentVC())
             SceneDelegate.window?.rootViewController = nc
             SceneDelegate.window?.makeKeyAndVisible()
